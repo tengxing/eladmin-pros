@@ -6,7 +6,7 @@
 
 |     |   后端源码  |   前端源码  |
 |---  |--- | --- |
-|  github   |  https://github.com/tengxing/coralAdmin/crlAdmin   |  https://github.com/tengxing/coralAdmin/crlAdmin-web   |
+|  github   |  https://github.com/tengxing/coralAdmin/tree/jpa/crlAdmin   |  https://github.com/tengxing/coralAdmin/tree/jpa/crlAdmin-web   |
 #### 开发文档
 
 #### 预览地址
