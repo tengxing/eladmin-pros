@@ -1,17 +1,18 @@
 package cn.littleterry.modules.sys.controller;
 
 
+import cn.littleterry.exception.BadRequestException;
 import cn.littleterry.modules.sys.entity.SysMenu;
+import cn.littleterry.modules.sys.entity.dto.SysMenuDTO;
+import cn.littleterry.modules.sys.entity.dto.TreeModel;
 import cn.littleterry.modules.sys.service.SysMenuService;
 import cn.littleterry.util.R;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import cn.littleterry.util.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-
+import java.util.List;
 
 
 /**
@@ -21,22 +22,46 @@ import java.util.Arrays;
  * @since 2019-05-03
  */
 @RestController
-@RequestMapping("sys/sysmenu")
+@RequestMapping("sys/menu")
 public class SysMenuController {
     @Autowired
     private SysMenuService sysMenuService;
 
     /**
-     * 列表
+     * 构建前端路由菜单
+     * @return
+     */
+    @GetMapping(value = "/build")
+    public R<List<TreeModel>> buildMenus(){
+        String username = SecurityContextHolder.getCurrentUsername();
+        List<SysMenu> sysMenuList = sysMenuService.findByName(username);
+        return R.ok().write(sysMenuList);
+    }
+
+    /**
+     * 通过角色查询菜单
+     */
+    @RequestMapping("/findByRoleId")
+    public R<List<SysMenu>> findByRoleId(Long roleId){
+        return R.ok().write(sysMenuService.listByRoleId(roleId));
+    }
+
+    /**
+     * 查询菜单
      */
     @RequestMapping("/list")
-    public R list(SysMenu sysMenu, @RequestParam(name="page", defaultValue="1") Integer pageNo,
-                  @RequestParam(name="page", defaultValue="10") Integer pageSize){
-        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>(sysMenu);
-        Page<SysMenu> page = new Page<>(pageNo,pageSize);
-        IPage pageList = sysMenuService.page(page,queryWrapper);
+    public R<List<SysMenuDTO>> listAll(){
+        return R.ok().write(sysMenuService.listAll());
+    }
 
-        return R.ok().write(pageList);
+
+    /**
+     * 菜单树
+     * @return
+     */
+    @RequestMapping("/tree")
+    public R<TreeModel> tree(){
+        return R.ok().write(sysMenuService.tree());
     }
 
     /**
@@ -54,7 +79,10 @@ public class SysMenuController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody SysMenu sysMenu){
-		sysMenuService.save(sysMenu);
+        if (sysMenu.getParentId()==null) {
+            throw new BadRequestException("必须存在父级ID ");
+        }
+        sysMenuService.save(sysMenu);
 
         return R.ok();
     }
@@ -70,11 +98,11 @@ public class SysMenuController {
     }
 
     /**
-     * 删除
+     * 删除(子节点id)
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		sysMenuService.removeByIds(Arrays.asList(ids));
+    @RequestMapping("/delete/{id}")
+    public R delete(@PathVariable("id") Long id){
+		sysMenuService.removeById(id);
 
         return R.ok();
     }

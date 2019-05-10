@@ -20,5 +20,35 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+    <resultMap id="treeModelMap" type="cn.littleterry.modules.sys.entity.dto.TreeModel">
 
+    </resultMap>
+
+    <select id="queryByUser" parameterType="java.lang.String"  resultMap="sysMenuMap">
+	    SELECT
+            m.*
+        FROM
+            sys_menu m
+        JOIN sys_role_menu a ON a.menu_id = m.id
+        JOIN sys_role b ON a.role_id = b.id
+        JOIN sys_user_role c ON c.role_id = b.id
+        JOIN sys_user d ON d.id = c.user_id
+        WHERE
+            d.username = #{username,jdbcType=VARCHAR}
+	</select>
+
+    <select id="findByRoleId" parameterType="java.lang.Long" resultMap="sysMenuMap">
+        SELECT
+            m.*
+        FROM
+            sys_menu m
+        JOIN sys_role_menu rm ON rm.menu_id = m.id
+        JOIN sys_role r ON rm.role_id = r.id
+        WHERE
+        where r.id= #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="treeModelMap">
+        select * from sys_menu;
+    </select>
 </mapper>
