@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * 角色权限表
- * 
+ *
  * @author terry
  * @email tengxing7452@163.com
  * @since 2019-05-03

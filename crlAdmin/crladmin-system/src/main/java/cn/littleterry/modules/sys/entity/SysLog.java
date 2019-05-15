@@ -1,5 +1,6 @@
 package cn.littleterry.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -22,7 +23,7 @@ public class SysLog implements Serializable {
 	/**
 	 * 主键id
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 日志类型（1登录日志，2操作日志）

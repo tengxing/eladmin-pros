@@ -10,5 +10,9 @@
         <result property="menuId" column="menu_id"/>
     </resultMap>
 
+    <select id="listByRoleId" parameterType="java.lang.Long" resultMap="sysRoleMenuMap" >
+        select * from sys_role_menu
+        where role_id =#{roleId}
+    </select>
 
 </mapper>

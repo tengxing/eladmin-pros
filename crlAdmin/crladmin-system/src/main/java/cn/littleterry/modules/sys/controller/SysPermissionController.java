@@ -2,6 +2,9 @@ package cn.littleterry.modules.sys.controller;
 
 
 import cn.littleterry.modules.sys.entity.SysPermission;
+import cn.littleterry.modules.sys.entity.dto.SysMenuDTO;
+import cn.littleterry.modules.sys.entity.dto.SysPermissionDTO;
+import cn.littleterry.modules.sys.entity.dto.TreeModel;
 import cn.littleterry.modules.sys.service.SysPermissionService;
 import cn.littleterry.util.R;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-
+import java.util.List;
 
 
 /**
@@ -21,7 +24,7 @@ import java.util.Arrays;
  * @since 2019-05-03
  */
 @RestController
-@RequestMapping("sys/syspermission")
+@RequestMapping("sys/permission")
 public class SysPermissionController {
     @Autowired
     private SysPermissionService sysPermissionService;
@@ -30,13 +33,17 @@ public class SysPermissionController {
      * 列表
      */
     @RequestMapping("/list")
-    public R list(SysPermission sysPermission, @RequestParam(name="page", defaultValue="1") Integer pageNo,
-                  @RequestParam(name="page", defaultValue="10") Integer pageSize){
-        QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>(sysPermission);
-        Page<SysPermission> page = new Page<>(pageNo,pageSize);
-        IPage pageList = sysPermissionService.page(page,queryWrapper);
+    public R<List<SysPermissionDTO>> listAll(){
+        return R.ok().write(sysPermissionService.listAll());
+    }
 
-        return R.ok().write(pageList);
+    /**
+     * 菜单树
+     * @return
+     */
+    @RequestMapping("/tree")
+    public R<TreeModel> tree(){
+        return R.ok().write(sysPermissionService.tree());
     }
 
     /**

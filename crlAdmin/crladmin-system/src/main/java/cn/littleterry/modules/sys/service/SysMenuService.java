@@ -14,12 +14,14 @@ import java.util.List;
  * @since 2019-05-03
  */
 public interface SysMenuService extends IService<SysMenu> {
-    List<SysMenu> findByName(String username);
+    List<SysMenu> findByRoleId(long roleId);
 
     List<TreeModel> tree();
 
-    List<SysMenu> listByRoleId(Long roleId);
+    List<TreeModel> findByUser(String username);
 
     List<SysMenuDTO> listAll();
+
+    List<SysMenu> findByName(String username);
 }
 

@@ -4,6 +4,8 @@ import cn.littleterry.modules.sys.entity.SysRoleMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 角色菜单表
  *
@@ -12,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
-	
+
+    List<SysRoleMenu> listByRoleId(Long id);
 }

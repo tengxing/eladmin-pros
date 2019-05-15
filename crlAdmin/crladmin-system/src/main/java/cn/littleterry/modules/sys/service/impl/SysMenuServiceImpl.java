@@ -29,7 +29,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> findByName(String username) {
-        return Optional.ofNullable(this.sysMenuMapper.queryByUser(username)).orElse(Collections.emptyList());
+        return this.sysMenuMapper.findByUser(username);
+    }
+
+    @Override
+    public List<SysMenu> findByRoleId(long roleId) {
+        return this.sysMenuMapper.findByRoleId(roleId);
     }
 
     @Override
@@ -59,10 +64,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> listByRoleId(Long roleId) {
-        return this.sysMenuMapper.findByRoleId(roleId);
+    public List<TreeModel> findByUser(String username){
+        List<SysMenu> menuList = this.sysMenuMapper.findByUser(username);
+        List<TreeModel> treeModels =new ArrayList<>();
+        buildMenu(treeModels,menuList);
+        return treeModels;
     }
-
     @Override
     public List<TreeModel> tree() {
         List<SysMenu>  allMenuList = this.sysMenuMapper.selectList(Wrappers.emptyWrapper());

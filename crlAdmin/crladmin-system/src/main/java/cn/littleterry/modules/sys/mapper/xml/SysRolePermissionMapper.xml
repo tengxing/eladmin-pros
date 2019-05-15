@@ -10,5 +10,8 @@
         <result property="permissionId" column="permission_id"/>
     </resultMap>
 
-
+    <select id="listByRoleId" parameterType="java.lang.Long" resultMap="sysRolePermissionMap" >
+        select * from sys_role_permission
+        where role_id =#{roleId}
+    </select>
 </mapper>

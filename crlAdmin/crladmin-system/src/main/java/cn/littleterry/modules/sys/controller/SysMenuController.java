@@ -3,16 +3,23 @@ package cn.littleterry.modules.sys.controller;
 
 import cn.littleterry.exception.BadRequestException;
 import cn.littleterry.modules.sys.entity.SysMenu;
+import cn.littleterry.modules.sys.entity.SysRole;
+import cn.littleterry.modules.sys.entity.SysRoleMenu;
 import cn.littleterry.modules.sys.entity.dto.SysMenuDTO;
+import cn.littleterry.modules.sys.entity.dto.SysRoleDTO;
 import cn.littleterry.modules.sys.entity.dto.TreeModel;
 import cn.littleterry.modules.sys.service.SysMenuService;
+import cn.littleterry.modules.sys.service.SysRoleMenuService;
 import cn.littleterry.util.R;
 import cn.littleterry.util.SecurityContextHolder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -26,6 +33,8 @@ import java.util.List;
 public class SysMenuController {
     @Autowired
     private SysMenuService sysMenuService;
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
 
     /**
      * 构建前端路由菜单
@@ -39,11 +48,20 @@ public class SysMenuController {
     }
 
     /**
-     * 通过角色查询菜单
+     * 通过用户查询菜单
+     */
+    @RequestMapping("/findByUser")
+    public R<List<SysMenu>> findByUser(String username){
+        return R.ok().write(sysMenuService.findByUser(username));
+    }
+
+
+    /**
+     * 查询角色菜单
      */
     @RequestMapping("/findByRoleId")
-    public R<List<SysMenu>> findByRoleId(Long roleId){
-        return R.ok().write(sysMenuService.listByRoleId(roleId));
+    public R<List<SysMenu>> findByRoleId(long roleId){
+        return R.ok().write(sysMenuService.findByRoleId(roleId));
     }
 
     /**
@@ -60,7 +78,7 @@ public class SysMenuController {
      * @return
      */
     @RequestMapping("/tree")
-    public R<TreeModel> tree(){
+    public R<TreeModel> tree(String roleId){
         return R.ok().write(sysMenuService.tree());
     }
 

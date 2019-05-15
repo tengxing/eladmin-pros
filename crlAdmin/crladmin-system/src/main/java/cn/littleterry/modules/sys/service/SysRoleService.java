@@ -1,8 +1,10 @@
 package cn.littleterry.modules.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.littleterry.modules.sys.entity.SysRole;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,5 +14,6 @@ import java.util.Map;
  * @since 2019-05-03
  */
 public interface SysRoleService extends IService<SysRole> {
+    IPage<SysRole> listByPage(Map<String,Object> map);
 }
 
