@@ -1,7 +1,8 @@
 package cn.littleterry.service.impl;
 
 import cn.hutool.json.JSONObject;
-import cn.littleterry.domain.Log;
+import cn.littleterry.entity.SysLog;
+import cn.littleterry.mapper.SysLogMapper;
 import cn.littleterry.repository.LogRepository;
 import cn.littleterry.service.LogService;
 import cn.littleterry.util.RequestHolder;
@@ -14,12 +15,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
  * @author terry
- * @date 2018-11-24
+ * @since 2018-11-24
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -28,11 +30,14 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private LogRepository logRepository;
 
+    @Autowired
+    private SysLogMapper sysLogMapper;
+
     private final String LOGINPATH = "login";
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(ProceedingJoinPoint joinPoint, Log log){
+    public void save(ProceedingJoinPoint joinPoint, SysLog log){
 
         // 获取request
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
@@ -42,7 +47,7 @@ public class LogServiceImpl implements LogService {
 
         // 描述
         if (log != null) {
-            log.setDescription(aopLog.value());
+            log.setLogContent(aopLog.value());
         }
 
         // 方法路径
@@ -76,9 +81,9 @@ public class LogServiceImpl implements LogService {
                 e.printStackTrace();
             }
         }
-        log.setMethod(methodName);
-        log.setUsername(username);
-        log.setParams(params + " }");
-        logRepository.save(log);
+        log.setOperateMethod(methodName);
+        log.setOperateId(username);
+        log.setRequestParam(params + " }");
+        sysLogMapper.insert(log);
     }
 }

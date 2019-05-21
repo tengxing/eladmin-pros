@@ -1,10 +1,10 @@
 package cn.littleterry.aspect;
 
-import lombok.extern.slf4j.Slf4j;
-import cn.littleterry.domain.Log;
+import cn.littleterry.entity.SysLog;
 import cn.littleterry.exception.BadRequestException;
 import cn.littleterry.service.LogService;
 import cn.littleterry.util.ThrowableUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author terry
- * @date 2018-11-24
+ * @since 2018-11-24
  */
 @Component
 @Aspect
@@ -50,7 +50,7 @@ public class DataScopeAspect {
         } catch (Throwable e) {
             throw new BadRequestException(e.getMessage());
         }
-        Log log = new Log("INFO",System.currentTimeMillis() - currentTime);
+        SysLog log = new SysLog("INFO",System.currentTimeMillis() - currentTime);
         logService.save(joinPoint, log);
         return result;
     }
@@ -63,8 +63,8 @@ public class DataScopeAspect {
      */
     @AfterThrowing(pointcut = "logPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        Log log = new Log("ERROR",System.currentTimeMillis() - currentTime);
-        log.setExceptionDetail(ThrowableUtil.getStackTrace(e));
+        SysLog log = new SysLog("ERROR",System.currentTimeMillis() - currentTime);
+        log.setLogContent(ThrowableUtil.getStackTrace(e));
         logService.save((ProceedingJoinPoint)joinPoint, log);
     }
 }

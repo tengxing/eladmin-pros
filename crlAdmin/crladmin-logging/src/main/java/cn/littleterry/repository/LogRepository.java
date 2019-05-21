@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author terry
- * @date 2018-11-24
+ * @since 2018-11-24
  */
 @Repository
 public interface LogRepository extends JpaRepository<Log,Long>, JpaSpecificationExecutor {

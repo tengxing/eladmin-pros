@@ -1,13 +1,12 @@
 package cn.littleterry.service;
 
-import cn.littleterry.domain.Log;
-import cn.littleterry.domain.Log;
+import cn.littleterry.entity.SysLog;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 
 /**
  * @author terry
- * @date 2018-11-24
+ * @since 2018-11-24
  */
 public interface LogService {
 
@@ -17,5 +16,5 @@ public interface LogService {
      * @param log
      */
     @Async
-    void save(ProceedingJoinPoint joinPoint, Log log);
+    void save(ProceedingJoinPoint joinPoint, SysLog log);
 }

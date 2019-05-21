@@ -1,0 +1,9 @@
+cn\littleterry\rest\LogController.class
+cn\littleterry\aspect\DataScopeAspect.class
+cn\littleterry\domain\Log.class
+cn\littleterry\repository\LogRepository.class
+cn\littleterry\service\query\LogQueryService$Spec.class
+cn\littleterry\service\query\LogQueryService.class
+cn\littleterry\service\impl\LogServiceImpl.class
+cn\littleterry\service\LogService.class
+cn\littleterry\aop\log\Log.class

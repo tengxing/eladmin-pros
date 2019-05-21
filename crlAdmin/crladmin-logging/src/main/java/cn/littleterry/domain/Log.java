@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * @author terry
- * @date 2018-11-24
+ * @since 2018-11-24
  */
 @Entity
 @Data
