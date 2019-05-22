@@ -48,6 +48,10 @@ public class LogServiceImpl implements LogService {
         // 描述
         if (log != null) {
             log.setLogContent(aopLog.value());
+            log.setLogType(2);
+            if("用户登录".equals(aopLog.value())){
+                log.setLogType(1);
+            }
         }
 
         // 方法路径
@@ -69,6 +73,8 @@ public class LogServiceImpl implements LogService {
 
         // 获取IP地址
         log.setRequestIp(StringUtils.getIP(request));
+        log.setRequestMethod(request.getMethod());
+        log.setRequestUri(request.getRequestURI());
 
         if(!LOGINPATH.equals(signature.getName())){
             UserDetails userDetails = SecurityContextHolder.getUserDetails();

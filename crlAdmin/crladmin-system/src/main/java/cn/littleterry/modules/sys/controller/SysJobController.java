@@ -21,7 +21,7 @@ import java.util.Arrays;
  * @since 2019-05-03
  */
 @RestController
-@RequestMapping("sys/sysjob")
+@RequestMapping("sys/job")
 public class SysJobController {
     @Autowired
     private SysJobService sysJobService;
@@ -31,12 +31,12 @@ public class SysJobController {
      */
     @RequestMapping("/list")
     public R list(SysJob sysJob, @RequestParam(name="page", defaultValue="1") Integer pageNo,
-                  @RequestParam(name="page", defaultValue="10") Integer pageSize){
+                  @RequestParam(name="size", defaultValue="10") Integer pageSize){
         QueryWrapper<SysJob> queryWrapper = new QueryWrapper<>(sysJob);
         Page<SysJob> page = new Page<>(pageNo,pageSize);
         IPage pageList = sysJobService.page(page,queryWrapper);
 
-        return R.ok().write(pageList);
+        return R.ok().write(pageList.getRecords());
     }
 
     /**
@@ -73,8 +73,8 @@ public class SysJobController {
      * 删除
      */
     @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		sysJobService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long id){
+		sysJobService.removeById(id);
 
         return R.ok();
     }
