@@ -4,9 +4,9 @@
     <!--表格渲染-->
     <div :style="'height: auto;max-height:' + height + 'overflow-y: auto;'">
       <el-table v-loading="loading" :data="data" highlight-current-row size="small" style="width: 100%;" @current-change="handleCurrentChange">
-        <el-table-column prop="name" label="名称"/>
-        <el-table-column prop="dataScope" label="数据权限"/>
-        <el-table-column prop="remark" label="描述"/>
+        <el-table-column prop="roleName" label="名称"/>
+        <el-table-column prop="roleCode" label="数据权限"/>
+        <el-table-column prop="description" label="描述"/>
         <el-table-column prop="createTime" label="创建日期">
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -138,7 +138,7 @@ export default {
       this.$refs.permission.setCheckedKeys([])
       this.$refs.menu.setCheckedKeys([])
       this.showButton = false
-      this.url = 'api/roles'
+      this.url = 'sys/role/list'
       const sort = 'id,desc'
       const query = this.query
       const value = query.value
@@ -165,12 +165,12 @@ export default {
     },
     getPermissions() {
       getPermissionTree().then(res => {
-        this.permissions = res
+        this.permissions = res.result
       })
     },
     getMenus() {
       getMenusTree().then(res => {
-        this.menus = res
+        this.menus = res.result
       })
     },
     handleCurrentChange(val) {

@@ -3,10 +3,10 @@
     <eHeader :query="query" :dicts="dicts"/>
     <!--表格渲染-->
     <el-table v-loading="loading" :data="data" size="small" style="width: 100%;">
-      <el-table-column prop="name" label="名称"/>
+      <el-table-column prop="jobName" label="名称"/>
       <el-table-column label="所属部门">
         <template slot-scope="scope">
-          <div>{{ scope.row.dept.name }}</div>
+          <!--<div>{{ scope.row.dept.name }}</div>-->
         </template>
       </el-table-column>
       <el-table-column prop="sort" label="排序">
@@ -81,9 +81,8 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/job'
-      const sort = 'sort,asc'
-      this.params = { page: this.page, size: this.size, sort: sort }
+      this.url = 'sys/job/list'
+      this.params = { page: this.page, size: this.size }
       const query = this.query
       const value = query.value
       const enabled = query.enabled

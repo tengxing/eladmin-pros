@@ -78,7 +78,7 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/menus'
+      this.url = 'sys/menu/list'
       const sort = 'id,desc'
       const query = this.query
       const value = query.value

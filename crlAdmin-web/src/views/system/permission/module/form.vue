@@ -4,7 +4,7 @@
       <el-form-item label="名称" prop="name">
         <el-input v-model="form.name" style="width: 360px;"/>
       </el-form-item>
-      <el-form-item label="别名" prop="alias">
+      <el-form-item label="编码" prop="code">
         <el-input v-model="form.alias" style="width: 360px;"/>
       </el-form-item>
       <el-form-item style="margin-bottom: 0px;" label="上级类目">

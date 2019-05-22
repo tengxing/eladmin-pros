@@ -48,8 +48,8 @@ export default {
           value: 'name'
         },
         {
-          text: '别名',
-          value: 'alias'
+          text: '编码',
+          value: 'code'
         }
       ],
       delLoading: false, sup_this: this
@@ -64,7 +64,7 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/permissions'
+      this.url = 'sys/permission/list'
       const sort = 'id,desc'
       const query = this.query
       const value = query.value
