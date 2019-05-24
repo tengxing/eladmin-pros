@@ -3,11 +3,11 @@ import request from '@/utils/request'
 export function getAllJob(deptId) {
   const params = {
     deptId,
-    page: 0,
+    page: 1,
     size: 9999
   }
   return request({
-    url: 'api/job',
+    url: 'sys/job',
     method: 'get',
     params
   })
@@ -15,7 +15,7 @@ export function getAllJob(deptId) {
 
 export function add(data) {
   return request({
-    url: 'api/job',
+    url: 'sys/job/save',
     method: 'post',
     data
   })
@@ -23,15 +23,15 @@ export function add(data) {
 
 export function del(id) {
   return request({
-    url: 'api/job/' + id,
-    method: 'delete'
+    url: 'sys/job/delete/' + id,
+    method: 'get'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'api/job',
-    method: 'put',
+    url: 'sys/job/update',
+    method: 'get',
     data
   })
 }

@@ -10,8 +10,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 
 
 /**
@@ -21,7 +19,7 @@ import java.util.Arrays;
  * @since 2019-05-03
  */
 @RestController
-@RequestMapping("sys/sysdept")
+@RequestMapping("sys/dept")
 public class SysDeptController {
     @Autowired
     private SysDeptService sysDeptService;
@@ -72,9 +70,9 @@ public class SysDeptController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		sysDeptService.removeByIds(Arrays.asList(ids));
+    @RequestMapping("/delete/{id}")
+    public R delete(@PathVariable("id") Long id){
+		sysDeptService.removeById(id);
 
         return R.ok();
     }

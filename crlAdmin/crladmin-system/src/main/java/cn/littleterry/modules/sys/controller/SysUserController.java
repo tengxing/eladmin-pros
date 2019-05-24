@@ -10,8 +10,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 
 
 /**
@@ -72,9 +70,9 @@ public class SysUserController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		sysUserService.removeByIds(Arrays.asList(ids));
+    @RequestMapping("/delete/{id}")
+    public R delete(@PathVariable("id") Long id){
+		sysUserService.removeById(id);
 
         return R.ok();
     }

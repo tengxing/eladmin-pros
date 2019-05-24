@@ -10,8 +10,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-
 
 
 /**
@@ -72,8 +70,8 @@ public class SysJobController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long id){
+    @RequestMapping("/delete/{id}")
+    public R delete(@PathVariable("id") Long id){
 		sysJobService.removeById(id);
 
         return R.ok();

@@ -1,20 +1,22 @@
 package cn.littleterry.modules.sys.controller;
 
 
+import cn.littleterry.aop.log.Log;
 import cn.littleterry.modules.sys.entity.SysRole;
 import cn.littleterry.modules.sys.entity.SysRoleMenu;
 import cn.littleterry.modules.sys.entity.SysRolePermission;
 import cn.littleterry.modules.sys.entity.dto.SysRoleDTO;
-import cn.littleterry.modules.sys.entity.dto.TreeModel;
 import cn.littleterry.modules.sys.service.*;
 import cn.littleterry.util.R;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -41,6 +43,7 @@ public class SysRoleController {
     /**
      * 列表
      */
+    @Log("角色列表")
     @RequestMapping("/list")
     public R list(@RequestParam(name="page", defaultValue="1") Integer pageNo,
                   @RequestParam(name="size", defaultValue="10") Integer pageSize){
@@ -68,6 +71,7 @@ public class SysRoleController {
     /**
      * 更新角色菜单
      */
+    @Log("更新角色菜单")
     @RequestMapping("/updateMenu")
     public R updateMenu(@RequestBody SysRoleDTO roleDTO){
         List<SysRoleMenu> roleMenus = sysRoleMenuService.listByRoleId(roleDTO.getId());
@@ -89,6 +93,7 @@ public class SysRoleController {
     /**
      * 更新角色权限
      */
+    @Log("更新角色权限")
     @RequestMapping("/updatePermission")
     public R updatePermission(@RequestBody SysRoleDTO roleDTO){
         List<SysRolePermission> rolePermissions = sysRolePermissionService.listByRoleId(roleDTO.getId());
@@ -111,6 +116,7 @@ public class SysRoleController {
     /**
      * 信息
      */
+    @Log("获取角色信息")
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
 		SysRole sysRole = sysRoleService.getById(id);
@@ -125,6 +131,7 @@ public class SysRoleController {
     /**
      * 保存
      */
+    @Log("保存角色信息")
     @RequestMapping("/save")
     public R save(@RequestBody SysRole sysRole){
 		sysRoleService.save(sysRole);
@@ -135,6 +142,7 @@ public class SysRoleController {
     /**
      * 修改
      */
+    @Log("修改角色信息")
     @RequestMapping("/update")
     public R update(@RequestBody SysRole sysRole){
 		sysRoleService.updateById(sysRole);
@@ -145,9 +153,10 @@ public class SysRoleController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		sysRoleService.removeByIds(Arrays.asList(ids));
+    @Log("删除角色信息")
+    @RequestMapping("/delete/{id}")
+    public R delete(@PathVariable("id") Long id){
+        sysRoleService.removeById(id);
 
         return R.ok();
     }

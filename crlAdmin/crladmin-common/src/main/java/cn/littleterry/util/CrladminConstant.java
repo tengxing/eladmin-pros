@@ -3,7 +3,7 @@ package cn.littleterry.util;
 /**
  * 常用静态常量
  * @author terry
- * @date 2018-12-26
+ * @since 2018-12-26
  */
 public class CrladminConstant {
 

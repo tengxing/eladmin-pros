@@ -3,23 +3,16 @@ package cn.littleterry.modules.sys.controller;
 
 import cn.littleterry.exception.BadRequestException;
 import cn.littleterry.modules.sys.entity.SysMenu;
-import cn.littleterry.modules.sys.entity.SysRole;
-import cn.littleterry.modules.sys.entity.SysRoleMenu;
 import cn.littleterry.modules.sys.entity.dto.SysMenuDTO;
-import cn.littleterry.modules.sys.entity.dto.SysRoleDTO;
 import cn.littleterry.modules.sys.entity.dto.TreeModel;
 import cn.littleterry.modules.sys.service.SysMenuService;
 import cn.littleterry.modules.sys.service.SysRoleMenuService;
+import cn.littleterry.util.GlobalAuthUtils;
 import cn.littleterry.util.R;
-import cn.littleterry.util.SecurityContextHolder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -42,7 +35,7 @@ public class SysMenuController {
      */
     @GetMapping(value = "/build")
     public R<List<TreeModel>> buildMenus(){
-        String username = SecurityContextHolder.getCurrentUsername();
+        String username = GlobalAuthUtils.getCurrentUser();
         List<SysMenu> sysMenuList = sysMenuService.findByName(username);
         return R.ok().write(sysMenuList);
     }
