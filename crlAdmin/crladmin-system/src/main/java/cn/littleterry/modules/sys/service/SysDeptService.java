@@ -6,10 +6,10 @@ import cn.littleterry.modules.sys.entity.SysDept;
 import java.util.Map;
 
 /**
- * 部门表
+ * 部门组织表
  *
  * @author terry
- * @since 2019-05-03
+ * @since 2019-07-06
  */
 public interface SysDeptService extends IService<SysDept> {
 }

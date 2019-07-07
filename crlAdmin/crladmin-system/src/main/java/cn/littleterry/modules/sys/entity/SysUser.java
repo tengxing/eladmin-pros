@@ -61,9 +61,9 @@ public class SysUser implements Serializable {
 	 */
 	private String phone;
 	/**
-	 * 状态(1：正常  2：冻结 ）
+	 * 状态(true：正常  false：冻结 ）
 	 */
-	private Integer status;
+	private String enabled;
 	/**
 	 * 删除状态（0，正常，1已删除）
 	 */

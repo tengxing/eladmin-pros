@@ -1,5 +1,6 @@
 package cn.littleterry.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -8,11 +9,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 部门表
+ * 部门组织表
  * 
  * @author terry
  * @email tengxing7452@163.com
- * @since 2019-05-03
+ * @date 2019-07-06
  */
 @Data
 @TableName("sys_dept")
@@ -22,10 +23,10 @@ public class SysDept implements Serializable {
 	/**
 	 * 主键id
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
-	 * 父部门ID
+	 * 父id
 	 */
 	private Long parentId;
 	/**
@@ -37,27 +38,20 @@ public class SysDept implements Serializable {
 	 */
 	private String deptCode;
 	/**
-	 * 排序
-	 */
-	private Integer sort;
-	/**
 	 * 描述
 	 */
 	private String description;
+
 	/**
-	 * 地址
+	 * 是否可用
 	 */
-	private String address;
-	/**
-	 * 状态（1启用，0不启用）
-	 */
-	private String status;
+	private String enabled;
 	/**
 	 * 创建人
 	 */
 	private String createBy;
 	/**
-	 * 创建日期
+	 * 创建时间
 	 */
 	private Date createTime;
 	/**
@@ -65,7 +59,7 @@ public class SysDept implements Serializable {
 	 */
 	private String updateBy;
 	/**
-	 * 更新日期
+	 * 更新时间
 	 */
 	private Date updateTime;
 

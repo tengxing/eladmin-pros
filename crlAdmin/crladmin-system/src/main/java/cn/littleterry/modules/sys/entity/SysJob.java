@@ -18,9 +18,6 @@ import javax.persistence.*;
  */
 @Data
 @TableName("sys_job")
-@Entity
-@Table(name="sys_job")
-
 public class SysJob implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,9 +25,6 @@ public class SysJob implements Serializable {
 	 * 主键id
 	 */
 	@TableId
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long id;
 	/**
 	 * 岗位名称

@@ -9,6 +9,7 @@ import cn.littleterry.modules.sys.entity.dto.SysRoleDTO;
 import cn.littleterry.modules.sys.service.*;
 import cn.littleterry.util.R;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,8 @@ public class SysRoleController {
     /**
      * 列表
      */
-    @Log("角色列表")
+    //@Log("角色列表")
+    @ApiOperation("角色列表")
     @RequestMapping("/list")
     public R list(@RequestParam(name="page", defaultValue="1") Integer pageNo,
                   @RequestParam(name="size", defaultValue="10") Integer pageSize){
@@ -110,6 +112,16 @@ public class SysRoleController {
         });
         sysRolePermissionService.saveBatch(newRolePermissions);
         return R.ok();
+    }
+
+    /**
+     * 获取所有角色信息
+     * @return
+     */
+    @Log("获取所有角色信息")
+    @RequestMapping("/all")
+    public R<List<SysRole>> all(){
+        return R.ok().write(sysRoleService.list());
     }
 
 
