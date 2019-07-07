@@ -1,12 +1,11 @@
 package cn.littleterry.modules.sys.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 部门组织表
@@ -23,7 +22,7 @@ public class SysDept implements Serializable {
 	/**
 	 * 主键id
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId
 	private Long id;
 	/**
 	 * 父id
