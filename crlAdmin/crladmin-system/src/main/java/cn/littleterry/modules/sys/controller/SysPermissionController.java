@@ -6,6 +6,7 @@ import cn.littleterry.modules.sys.entity.dto.SysPermissionDTO;
 import cn.littleterry.modules.sys.entity.dto.TreeModel;
 import cn.littleterry.modules.sys.service.SysPermissionService;
 import cn.littleterry.util.R;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ public class SysPermissionController {
     /**
      * 列表
      */
+    @ApiOperation("分页查询权限列表信息")
     @RequestMapping("/list")
     public R<List<SysPermissionDTO>> listAll(){
         return R.ok().write(sysPermissionService.listAll());
@@ -39,6 +41,7 @@ public class SysPermissionController {
      * 菜单树
      * @return
      */
+    @ApiOperation("查询权限树信息")
     @RequestMapping("/tree")
     public R<TreeModel> tree(){
         return R.ok().write(sysPermissionService.tree());
@@ -47,6 +50,7 @@ public class SysPermissionController {
     /**
      * 信息
      */
+    @ApiOperation("查询权限信息")
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
 		SysPermission sysPermission = sysPermissionService.getById(id);
@@ -57,8 +61,9 @@ public class SysPermissionController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    public R save(@RequestBody SysPermission sysPermission){
+    @ApiOperation("新增权限信息")
+    @RequestMapping("/add")
+    public R add(@RequestBody SysPermission sysPermission){
 		sysPermissionService.save(sysPermission);
 
         return R.ok();
@@ -67,8 +72,10 @@ public class SysPermissionController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    public R update(@RequestBody SysPermission sysPermission){
+
+    @ApiOperation("修改权限信息")
+    @RequestMapping("/modify")
+    public R modify(@RequestBody SysPermission sysPermission){
 		sysPermissionService.updateById(sysPermission);
 
         return R.ok();
@@ -77,8 +84,10 @@ public class SysPermissionController {
     /**
      * 删除
      */
-    @RequestMapping("/delete/{id}")
-    public R delete(@PathVariable("id") Long id){
+
+    @ApiOperation("删除权限信息")
+    @RequestMapping("/remove/{id}")
+    public R remove(@PathVariable("id") Long id){
         sysPermissionService.removeById(id);
 
         return R.ok();

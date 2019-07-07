@@ -44,8 +44,7 @@ public class SysRoleController {
     /**
      * 列表
      */
-    //@Log("角色列表")
-    @ApiOperation("角色列表")
+    @ApiOperation("分页查询角色列表信息")
     @RequestMapping("/list")
     public R list(@RequestParam(name="page", defaultValue="1") Integer pageNo,
                   @RequestParam(name="size", defaultValue="10") Integer pageSize){
@@ -73,7 +72,7 @@ public class SysRoleController {
     /**
      * 更新角色菜单
      */
-    @Log("更新角色菜单")
+    @ApiOperation("更新角色菜单")
     @RequestMapping("/updateMenu")
     public R updateMenu(@RequestBody SysRoleDTO roleDTO){
         List<SysRoleMenu> roleMenus = sysRoleMenuService.listByRoleId(roleDTO.getId());
@@ -95,7 +94,7 @@ public class SysRoleController {
     /**
      * 更新角色权限
      */
-    @Log("更新角色权限")
+    @ApiOperation("更新角色权限")
     @RequestMapping("/updatePermission")
     public R updatePermission(@RequestBody SysRoleDTO roleDTO){
         List<SysRolePermission> rolePermissions = sysRolePermissionService.listByRoleId(roleDTO.getId());
@@ -118,7 +117,7 @@ public class SysRoleController {
      * 获取所有角色信息
      * @return
      */
-    @Log("获取所有角色信息")
+    @ApiOperation("获取所有角色信息")
     @RequestMapping("/all")
     public R<List<SysRole>> all(){
         return R.ok().write(sysRoleService.list());
@@ -128,7 +127,7 @@ public class SysRoleController {
     /**
      * 信息
      */
-    @Log("获取角色信息")
+    @ApiOperation("查询角色信息")
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
 		SysRole sysRole = sysRoleService.getById(id);
@@ -143,9 +142,9 @@ public class SysRoleController {
     /**
      * 保存
      */
-    @Log("保存角色信息")
-    @RequestMapping("/save")
-    public R save(@RequestBody SysRole sysRole){
+    @ApiOperation("新增角色信息")
+    @RequestMapping("/add")
+    public R add(@RequestBody SysRole sysRole){
 		sysRoleService.save(sysRole);
 
         return R.ok();
@@ -154,9 +153,9 @@ public class SysRoleController {
     /**
      * 修改
      */
-    @Log("修改角色信息")
-    @RequestMapping("/update")
-    public R update(@RequestBody SysRole sysRole){
+    @ApiOperation("修改角色信息")
+    @RequestMapping("/modify")
+    public R modify(@RequestBody SysRole sysRole){
 		sysRoleService.updateById(sysRole);
 
         return R.ok();
@@ -165,9 +164,9 @@ public class SysRoleController {
     /**
      * 删除
      */
-    @Log("删除角色信息")
-    @RequestMapping("/delete/{id}")
-    public R delete(@PathVariable("id") Long id){
+    @ApiOperation("删除角色信息")
+    @RequestMapping("/remove/{id}")
+    public R remove(@PathVariable("id") Long id){
         sysRoleService.removeById(id);
 
         return R.ok();

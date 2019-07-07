@@ -9,6 +9,7 @@ import cn.littleterry.modules.sys.service.SysMenuService;
 import cn.littleterry.modules.sys.service.SysRoleMenuService;
 import cn.littleterry.util.GlobalAuthUtils;
 import cn.littleterry.util.R;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class SysMenuController {
      * 构建前端路由菜单
      * @return
      */
+    @ApiOperation("构建前端路由菜单")
     @GetMapping(value = "/build")
     public R<List<TreeModel>> buildMenus(){
         String username = GlobalAuthUtils.getCurrentUser();
@@ -43,6 +45,7 @@ public class SysMenuController {
     /**
      * 通过用户查询菜单
      */
+    @ApiOperation("通过用户查询菜单")
     @RequestMapping("/findByUser")
     public R<List<SysMenu>> findByUser(String username){
         return R.ok().write(sysMenuService.findByUser(username));
@@ -52,6 +55,7 @@ public class SysMenuController {
     /**
      * 查询角色菜单
      */
+    @ApiOperation("通过角色查询菜单")
     @RequestMapping("/findByRoleId")
     public R<List<SysMenu>> findByRoleId(long roleId){
         return R.ok().write(sysMenuService.findByRoleId(roleId));
@@ -60,6 +64,7 @@ public class SysMenuController {
     /**
      * 查询菜单
      */
+    @ApiOperation("查询菜单列表")
     @RequestMapping("/list")
     public R<List<SysMenuDTO>> listAll(){
         return R.ok().write(sysMenuService.listAll());
@@ -70,6 +75,7 @@ public class SysMenuController {
      * 菜单树
      * @return
      */
+    @ApiOperation("查询菜单树")
     @RequestMapping("/tree")
     public R<TreeModel> tree(String roleId){
         return R.ok().write(sysMenuService.tree());
@@ -78,6 +84,7 @@ public class SysMenuController {
     /**
      * 信息
      */
+    @ApiOperation("查询菜单信息")
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
 		SysMenu sysMenu = sysMenuService.getById(id);
@@ -88,8 +95,9 @@ public class SysMenuController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    public R save(@RequestBody SysMenu sysMenu){
+    @ApiOperation("新增菜单信息")
+    @RequestMapping("/add")
+    public R add(@RequestBody SysMenu sysMenu){
         if (sysMenu.getParentId()==null) {
             throw new BadRequestException("必须存在父级ID ");
         }
@@ -101,8 +109,9 @@ public class SysMenuController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    public R update(@RequestBody SysMenu sysMenu){
+    @ApiOperation("修改菜单信息")
+    @RequestMapping("/modify")
+    public R modify(@RequestBody SysMenu sysMenu){
 		sysMenuService.updateById(sysMenu);
 
         return R.ok();
@@ -111,8 +120,9 @@ public class SysMenuController {
     /**
      * 删除(子节点id)
      */
-    @RequestMapping("/delete/{id}")
-    public R delete(@PathVariable("id") Long id){
+    @ApiOperation("删除菜单信息")
+    @RequestMapping("/remove/{id}")
+    public R remove(@PathVariable("id") Long id){
 		sysMenuService.removeById(id);
 
         return R.ok();

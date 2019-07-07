@@ -8,6 +8,7 @@ import cn.littleterry.util.R;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class SysUserController {
     /**
      * 列表
      */
+    @ApiOperation("分页查询用户列表")
     @RequestMapping("/list")
     public R list(SysUser sysUser,
                   @RequestParam(name="page", defaultValue="1") Integer pageNo,
@@ -48,6 +50,7 @@ public class SysUserController {
     /**
      * 信息
      */
+    @ApiOperation("查询用户信息")
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
 		SysUser sysUser = sysUserService.getById(id);
@@ -58,6 +61,7 @@ public class SysUserController {
     /**
      * 保存
      */
+    @ApiOperation("新增用户信息")
     @RequestMapping("/add")
     public R save(@RequestBody SysUserDto userDto){
 
@@ -74,6 +78,7 @@ public class SysUserController {
     /**
      * 修改
      */
+    @ApiOperation("修改用户信息")
     @RequestMapping("/modify")
     public R modify(@RequestBody SysUserDto userDto){
 
@@ -87,6 +92,7 @@ public class SysUserController {
     /**
      * 删除
      */
+    @ApiOperation("删除用户信息")
     @RequestMapping("/remove/{id}")
     public R delete(@PathVariable("id") Long id){
 		sysUserService.removeById(id);
