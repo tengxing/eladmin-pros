@@ -14,7 +14,7 @@
         <el-input v-model="form.email" />
       </el-form-item>
       <el-form-item label="部门">
-        <treeselect v-model="deptId" :options="depts" :style="style" placeholder="选择部门" @select="selectFun" />
+        <treeselect v-model="deptId" :options="depts" :normalizer="normalizer" :style="style" placeholder="选择部门" @select="selectFun" />
       </el-form-item>
       <el-form-item label="岗位">
         <el-select v-model="jobId" :style="style" placeholder="请先选择部门">
@@ -29,8 +29,8 @@
         <el-select v-model="roleIds" style="width: 450px;" multiple placeholder="请选择">
           <el-option
             v-for="(item, index) in roles"
-            :key="item.name + index"
-            :label="item.name"
+            :key="item.roleName + index"
+            :label="item.roleName"
             :value="item.id"/>
         </el-select>
       </el-form-item>
@@ -79,6 +79,13 @@ export default {
     return {
       dialog: false, loading: false, form: { username: '', email: '', enabled: 'false', roles: [], job: { id: '' }, dept: { id: '' }, phone: null },
       roleIds: [], roles: [], depts: [], deptId: null, jobId: null, jobs: [], style: 'width: 184px',
+      normalizer(node) {
+        return {
+          id: node.id,
+          label: node.deptName,
+          children: node.children
+        }
+      },
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -119,7 +126,7 @@ export default {
               message: '部门不能为空',
               type: 'warning'
             })
-          } else if (this.jobId === null) {
+          } else if (this.jobId !== null) {
             this.$message({
               message: '岗位不能为空',
               type: 'warning'
@@ -187,7 +194,7 @@ export default {
     },
     getRoles() {
       getAll().then(res => {
-        this.roles = res
+        this.roles = res.result
       }).catch(err => {
         console.log(err.response.data.message)
       })
@@ -201,7 +208,7 @@ export default {
     },
     getDepts() {
       getDepts({ enabled: true }).then(res => {
-        this.depts = res.content
+        this.depts = res.result
       })
     },
     isvalidPhone(str) {

@@ -2,7 +2,7 @@
   <el-dialog :visible.sync="dialog" :title="isAdd ? '新增角色' : '编辑角色'" append-to-body width="500px">
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
       <el-form-item label="角色名称" prop="name">
-        <el-input v-model="form.name" style="width: 370px;"/>
+        <el-input v-model="form.roleName" style="width: 370px;"/>
       </el-form-item>
       <el-form-item label="数据范围">
         <el-select v-model="form.dataScope" style="width: 370px" placeholder="请选择数据范围" @change="changeScope">
@@ -17,7 +17,7 @@
         <treeselect v-model="deptIds" :options="depts" multiple style="width: 370px" placeholder="请选择" />
       </el-form-item>
       <el-form-item label="描述信息">
-        <el-input v-model="form.remark" style="width: 370px;" rows="5" type="textarea"/>
+        <el-input v-model="form.description" style="width: 370px;" rows="5" type="textarea"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -48,7 +48,7 @@ export default {
     return {
       dateScopes: ['全部', '本级', '自定义'],
       loading: false, dialog: false, depts: [], deptIds: [],
-      form: { name: '', depts: [], remark: '', dataScope: '本级' },
+      form: { roleName: '', depts: [], description: '', dataScope: '本级' },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }

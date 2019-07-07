@@ -14,15 +14,11 @@
           <el-table-column prop="username" label="用户名"/>
           <el-table-column prop="phone" label="电话"/>
           <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱"/>
-          <el-table-column label="部门 / 岗位">
-            <template slot-scope="scope">
-              <div>{{ scope.row.dept.name }} / {{ scope.row.job.name }}</div>
-            </template>
-          </el-table-column>
+          <el-table-column prop="deptName" label="部门 / 岗位"/>
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
               <div v-for="item in dicts" :key="item.id">
-                <el-tag v-if="scope.row.enabled.toString() === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
+                <el-tag v-if="scope.row.enabled === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
               </div>
             </template>
           </el-table-column>
@@ -79,7 +75,7 @@ export default {
       delLoading: false, sup_this: this, deptName: '', depts: [], deptId: null,
       defaultProps: {
         children: 'children',
-        label: 'name'
+        label: 'deptName'
       }
     }
   },
@@ -101,7 +97,7 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/users'
+      this.url = 'sys/user/list'
       const sort = 'id,desc'
       const query = this.query
       const type = query.type
@@ -134,7 +130,7 @@ export default {
       const params = { sort: sort }
       if (this.deptName) { params['name'] = this.deptName }
       getDepts(params).then(res => {
-        this.depts = res.content
+        this.depts = res.result
       })
     },
     handleNodeClick(data) {

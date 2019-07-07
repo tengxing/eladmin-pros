@@ -6,7 +6,7 @@
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <div v-for="item in dicts" :key="item.id">
-            <el-tag v-if="scope.row.enabled.toString() === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
+            <el-tag v-if="scope.row.enabled === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
           </div>
         </template>
       </el-table-column>
@@ -53,7 +53,7 @@ export default {
       columns: [
         {
           text: '名称',
-          value: 'name'
+          value: 'deptName'
         }
       ],
       delLoading: false, sup_this: this
@@ -70,7 +70,7 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/dept'
+      this.url = 'sys/dept/list'
       const sort = 'id,desc'
       this.params = { page: this.page, size: this.size, sort: sort }
       const query = this.query

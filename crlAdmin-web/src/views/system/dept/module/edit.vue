@@ -28,10 +28,10 @@ export default {
       _this.getDepts()
       _this.form = {
         id: this.data.id,
-        name: this.data.name,
-        pid: this.data.pid,
+        deptName: this.data.deptName,
+        parentId: this.data.parentId,
         createTime: this.data.createTime,
-        enabled: this.data.enabled.toString()
+        enabled: this.data.enabled
       }
       _this.dialog = true
     }
