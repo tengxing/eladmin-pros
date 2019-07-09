@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * 数据权限配置
  * @author terry
- * @date 2019-4-1
+ * @since 2019-4-1
  */
 @Component
 public class DataScope {

@@ -1,9 +1,14 @@
 package cn.littleterry.config;
 
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -14,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +64,34 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
         converters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
     }
 
+    /*@Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        for (int i = converters.size() - 1; i >= 0; i--) {
+            if (converters.get(i) instanceof MappingJackson2HttpMessageConverter) {
+                converters.remove(i);
+            }
+        }
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig config = new FastJsonConfig();
+        config.setSerializerFeatures(
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullNumberAsZero,
+                SerializerFeature.WriteDateUseDateFormat,
+                *//*禁用循环引用*//*
+                SerializerFeature.DisableCircularReferenceDetect
+        );
+
+        List<MediaType> fastMediaTypes = new ArrayList<>();
+        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+
+        fastJsonHttpMessageConverter.setFastJsonConfig(config);
+        fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaTypes);
+
+        converters.add(fastJsonHttpMessageConverter);
+
+    }*/
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
