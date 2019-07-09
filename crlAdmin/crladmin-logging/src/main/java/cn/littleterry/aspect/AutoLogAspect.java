@@ -13,15 +13,17 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
+ * 自动日志切面
  * @author terry
  * @since 2018-11-24
  */
 @Component
 @Aspect
 @Slf4j
-public class DataScopeAspect {
+public class AutoLogAspect {
 
     @Autowired
     private LogService logService;
@@ -31,10 +33,8 @@ public class DataScopeAspect {
     /**
      * 配置切入点
      */
-    @Pointcut("@annotation(cn.littleterry.aop.log.Log)")
-    public void logPointcut() {
-        // 该方法无方法体,主要为了让同类中其他方法使用此切入点
-    }
+    @Pointcut("@annotation(io.swagger.annotations.ApiOperation)")
+    public void logPointcut() {}
 
     /**
      * 配置环绕通知,使用在方法logPointcut()上注册的切入点
