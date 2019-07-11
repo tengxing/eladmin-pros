@@ -16,6 +16,10 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
-
+    
+    <select id="findByJobId" parameterType="java.lang.Long" resultType="cn.littleterry.modules.sys.entity.SysDept">
+        select d.* from sys_dept d, sys_dept_job dj
+        where dj.dept_id=d.id and dj.job_id=#{jobId}
+    </select>
 
 </mapper>

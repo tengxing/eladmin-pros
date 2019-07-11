@@ -30,7 +30,7 @@ export default {
         id: this.data.id,
         name: this.data.name,
         sort: this.data.sort,
-        enabled: this.data.enabled.toString(),
+        enabled: this.data.enabled,
         createTime: this.data.createTime,
         dept: { id: this.data.dept.id }
       }

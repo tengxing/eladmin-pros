@@ -27,7 +27,9 @@
       SELECT u.*,d.id deptCode,d.dept_name deptName from sys_user u
       LEFT JOIN sys_user_dept ud ON u.id=ud.user_id
       LEFT JOIN sys_dept d ON ud.dept_id=d.id
-      where d.id=#{deptId}
+      <if test="deptId!=null">
+          where d.id=#{deptId}
+      </if>
     </select>
 
 </mapper>

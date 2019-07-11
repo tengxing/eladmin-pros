@@ -15,7 +15,7 @@ export function getAllJob(deptId) {
 
 export function add(data) {
   return request({
-    url: 'sys/job/save',
+    url: 'sys/job/add',
     method: 'post',
     data
   })
@@ -23,14 +23,14 @@ export function add(data) {
 
 export function del(id) {
   return request({
-    url: 'sys/job/delete/' + id,
+    url: 'sys/job/remove/' + id,
     method: 'get'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'sys/job/update',
+    url: 'sys/job/modify',
     method: 'get',
     data
   })

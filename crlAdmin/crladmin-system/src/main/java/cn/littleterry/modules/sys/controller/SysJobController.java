@@ -1,8 +1,11 @@
 package cn.littleterry.modules.sys.controller;
 
 
+import cn.littleterry.modules.sys.entity.SysDept;
 import cn.littleterry.modules.sys.entity.SysJob;
+import cn.littleterry.modules.sys.entity.dto.SysJobDto;
 import cn.littleterry.modules.sys.service.SysJobService;
+import cn.littleterry.modules.sys.util.BeanCopyUtils;
 import cn.littleterry.util.R;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,6 +14,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -36,7 +41,17 @@ public class SysJobController {
         Page<SysJob> page = new Page<>(pageNo,pageSize);
         IPage pageList = sysJobService.page(page,queryWrapper);
 
-        return R.ok().write(pageList.getRecords());
+        List<SysJob> records = pageList.getRecords();
+
+        List<SysJobDto> list = new LinkedList<>();
+        for (SysJob item : records) {
+            SysJobDto dto= BeanCopyUtils.copy(item,SysJobDto.class);
+            SysDept dept = sysJobService.findSysDeptByJobId(item.getId());
+            dto.setDept(dept);
+            list.add(dto);
+        }
+
+        return R.ok().write(list);
     }
 
     /**
@@ -46,8 +61,11 @@ public class SysJobController {
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
 		SysJob sysJob = sysJobService.getById(id);
+        SysJobDto dto= BeanCopyUtils.copy(sysJob,SysJobDto.class);
+        SysDept dept = sysJobService.findSysDeptByJobId(sysJob.getId());
+        dto.setDept(dept);
 
-        return R.ok().write(sysJob);
+        return R.ok().write(dto);
     }
 
     /**
@@ -55,7 +73,7 @@ public class SysJobController {
      */
     @ApiOperation("新增部门信息")
     @RequestMapping("/add")
-    public R add(@RequestBody SysJob sysJob){
+    public R add(@RequestBody SysJobDto sysJob){
 		sysJobService.save(sysJob);
 
         return R.ok();
@@ -66,7 +84,7 @@ public class SysJobController {
      */
     @ApiOperation("修改部门信息")
     @RequestMapping("/modify")
-    public R modify(@RequestBody SysJob sysJob){
+    public R modify(@RequestBody SysJobDto sysJob){
 		sysJobService.updateById(sysJob);
 
         return R.ok();

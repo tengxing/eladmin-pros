@@ -48,9 +48,9 @@ export default {
     return {
       dateScopes: ['全部', '本级', '自定义'],
       loading: false, dialog: false, depts: [], deptIds: [],
-      form: { roleName: '', depts: [], description: '', dataScope: '本级' },
+      form: { roleName: '', description: '', dataScope: '本级' },
       rules: {
-        name: [
+        roleName: [
           { required: true, message: '请输入名称', trigger: 'blur' }
         ]
       }

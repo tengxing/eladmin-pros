@@ -18,14 +18,14 @@ export function add(data) {
 
 export function del(id) {
   return request({
-    url: 'sys/permission/delete' + id,
+    url: 'sys/permission/remove' + id,
     method: 'get'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'sys/permission/update',
+    url: 'sys/permission/modify',
     method: 'post',
     data
   })

@@ -29,12 +29,12 @@ export default {
       _this.getRoles()
       _this.getDepts()
       _this.roleIds = []
-      _this.form = { id: this.data.id, username: this.data.username, phone: this.data.phone, email: this.data.email, enabled: this.data.enabled.toString(), roles: [], dept: { id: this.data.dept.id }, job: { id: this.data.job.id }}
+      _this.form = { id: this.data.id, username: this.data.username, phone: this.data.phone, email: this.data.email, enabled: this.data.enabled, roles: [], dept: { id: this.data.deptCode }, job: { id: this.data.jobCode }}
       this.data.roles.forEach(function(data, index) {
-        _this.roleIds.push(data.id)
+        _this.roleIds.push(1)
       })
-      _this.deptId = this.data.dept.id
-      _this.jobId = this.data.job.id
+      _this.deptId = this.data.deptCode
+      _this.jobId = this.data.jobCode
       _this.getJobs(_this.deptId)
       _this.dialog = true
     }

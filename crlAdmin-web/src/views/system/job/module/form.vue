@@ -11,7 +11,7 @@
         <el-radio v-for="item in dicts" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
       </el-form-item>
       <el-form-item label="所属部门">
-        <treeselect v-model="deptId" :options="depts" style="width: 370px" placeholder="选择部门" />
+        <treeselect v-model="deptId" :options="depts" :normalizer="normalizer" style="width: 370px" placeholder="选择部门" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -52,6 +52,13 @@ export default {
         enabled: 'true',
         createTime: '',
         dept: { id: '' }
+      },
+      normalizer(node) {
+        return {
+          id: node.id,
+          label: node.deptName,
+          children: node.children
+        }
       },
       rules: {
         name: [
@@ -130,7 +137,7 @@ export default {
     },
     getDepts() {
       getDepts({ enabled: true }).then(res => {
-        this.depts = res.content
+        this.depts = res.result
       })
     }
   }

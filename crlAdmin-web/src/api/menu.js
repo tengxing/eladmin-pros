@@ -17,7 +17,7 @@ export function buildMenus() {
 
 export function add(data) {
   return request({
-    url: 'sys/menu/save',
+    url: 'sys/menu/add',
     method: 'post',
     data
   })
@@ -25,14 +25,14 @@ export function add(data) {
 
 export function del(id) {
   return request({
-    url: 'sys/menu/delete/' + id,
+    url: 'sys/menu/remove/' + id,
     method: 'get'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'sys/menu/update',
+    url: 'sys/menu/modify',
     method: 'post',
     data
   })

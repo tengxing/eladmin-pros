@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getDepts(params) {
   return request({
-    url: 'api/dept',
+    url: 'sys/dept/tree',
     method: 'get',
     params
   })
@@ -10,7 +10,7 @@ export function getDepts(params) {
 
 export function add(data) {
   return request({
-    url: 'api/dept',
+    url: 'sys/dept/add',
     method: 'post',
     data
   })
@@ -18,15 +18,15 @@ export function add(data) {
 
 export function del(id) {
   return request({
-    url: 'api/dept/' + id,
-    method: 'delete'
+    url: 'sys/dept/delete/' + id,
+    method: 'get'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'api/dept',
-    method: 'put',
+    url: 'sys/dept/modify',
+    method: 'post',
     data
   })
 }

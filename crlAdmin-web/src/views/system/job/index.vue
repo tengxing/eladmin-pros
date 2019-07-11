@@ -17,7 +17,7 @@
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <div v-for="item in dicts" :key="item.id">
-            <el-tag v-if="scope.row.enabled.toString() === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
+            <el-tag v-if="scope.row.enabled === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
           </div>
         </template>
       </el-table-column>

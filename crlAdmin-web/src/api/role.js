@@ -10,7 +10,7 @@ export function getAll() {
 
 export function add(data) {
   return request({
-    url: 'sys/role/save',
+    url: 'sys/role/add',
     method: 'post',
     data
   })
@@ -25,14 +25,14 @@ export function get(id) {
 
 export function del(id) {
   return request({
-    url: 'sys/role/delete/' + id,
+    url: 'sys/role/remove/' + id,
     method: 'get'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'sys/role/update',
+    url: 'sys/role/modify',
     method: 'post',
     data
   })
