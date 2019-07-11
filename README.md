@@ -1,6 +1,6 @@
 # coralAdmin
 
-项目基于 Spring Boot 2.1.0 、 Spring boot Jpa、 Spring Security、redis、Vue的前后端分离的权限管理系统，项目采用分模块开发方式， 权限控制采用 RBAC（Role-Based Access Control，基于角色的访问控制），支持数据字典、数据权限管理、前端菜单支持动态路由
+项目基于 Spring Boot 2.1.3 、 Springboot Mybatis-plus、 Spring Security、redis、Vue的前后端分离的权限管理系统，项目采用分模块开发方式， 权限控制采用 RBAC（Role-Based Access Control，基于角色的访问控制），支持数据字典、数据权限管理、前端菜单支持动态路由
 
 #### 项目源码
 
@@ -21,8 +21,7 @@
 
 - JDK：8
 - IDE：IntelliJ IDEA （后端）
-- IDE：JetBrains WebStorm（前端）
-- 依赖管理：Maven
+- 依赖管理：Maven,Npm
 - 数据库：MySQL 5.5.59
 
 #### 功能模块
