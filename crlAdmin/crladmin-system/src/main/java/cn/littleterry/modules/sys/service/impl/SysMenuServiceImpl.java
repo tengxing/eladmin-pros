@@ -67,14 +67,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<TreeModel> findByUser(String username){
         List<SysMenu> menuList = this.sysMenuMapper.findByUser(username);
         List<TreeModel> treeModels =new ArrayList<>();
-        buildMenu(treeModels,menuList);
+        buildTree(treeModels,menuList);
         return treeModels;
     }
     @Override
     public List<TreeModel> tree() {
         List<SysMenu>  allMenuList = this.sysMenuMapper.selectList(Wrappers.emptyWrapper());
         List<TreeModel> treeModels =new ArrayList<>();
-        buildMenu(treeModels,allMenuList);
+        buildTree(treeModels,allMenuList);
         return treeModels;
     }
 
@@ -83,7 +83,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @param treeModels
      * @param allList
      */
-    private void buildMenu(List<TreeModel> treeModels,List<SysMenu> allList){
+    private void buildTree(List<TreeModel> treeModels,List<SysMenu> allList){
         for(SysMenu menu : allList){
             if ("0".equals(menu.getParentId().toString())){
                 TreeModel tm= new TreeModel();

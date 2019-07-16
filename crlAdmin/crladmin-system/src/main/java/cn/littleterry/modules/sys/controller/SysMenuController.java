@@ -1,18 +1,24 @@
 package cn.littleterry.modules.sys.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.littleterry.exception.BadRequestException;
 import cn.littleterry.modules.sys.entity.SysMenu;
 import cn.littleterry.modules.sys.entity.dto.SysMenuDTO;
 import cn.littleterry.modules.sys.entity.dto.TreeModel;
+import cn.littleterry.modules.sys.entity.vo.MenuMetaVo;
+import cn.littleterry.modules.sys.entity.vo.MenuVo;
 import cn.littleterry.modules.sys.service.SysMenuService;
 import cn.littleterry.modules.sys.service.SysRoleMenuService;
+import cn.littleterry.modules.sys.util.BeanCopyUtils;
 import cn.littleterry.util.GlobalAuthUtils;
 import cn.littleterry.util.R;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -39,7 +45,17 @@ public class SysMenuController {
     public R<List<TreeModel>> buildMenus(){
         String username = GlobalAuthUtils.getCurrentUser();
         List<SysMenu> sysMenuList = sysMenuService.findByName(username);
-        return R.ok().write(sysMenuList);
+
+        List<SysMenuDTO> sysMenuDtoList =new ArrayList();
+
+        sysMenuList.stream().forEach(item->sysMenuDtoList.add(BeanCopyUtils.copy(item,SysMenuDTO.class)));
+
+
+        List<SysMenuDTO> sysMenuDTOTree = buildTree(sysMenuDtoList);
+
+        List<MenuVo> menus = buildMenus(sysMenuDTOTree);
+
+        return R.ok().write(menus);
     }
 
     /**
@@ -67,6 +83,7 @@ public class SysMenuController {
     @ApiOperation("查询菜单列表")
     @RequestMapping("/list")
     public R<List<SysMenuDTO>> listAll(){
+        System.out.println("console:"+sysMenuService.listAll().get(0).getComponent()==null);
         return R.ok().write(sysMenuService.listAll());
     }
 
@@ -126,6 +143,79 @@ public class SysMenuController {
 		sysMenuService.removeById(id);
 
         return R.ok();
+    }
+
+    private List<SysMenuDTO> buildTree(List<SysMenuDTO> menuDTOS){
+        List<SysMenuDTO> trees = new ArrayList<SysMenuDTO>();
+
+        for (SysMenuDTO menuDTO : menuDTOS) {
+
+            if ("0".equals(menuDTO.getParentId().toString())) {
+                trees.add(menuDTO);
+            }
+
+            for (SysMenuDTO it : menuDTOS) {
+                if (it.getParentId().toString().equals(menuDTO.getId().toString())) {
+                    if (menuDTO.getChildren() == null) {
+                        menuDTO.setChildren(new ArrayList<SysMenuDTO>());
+                    }
+                    menuDTO.getChildren().add(it);
+                }
+            }
+        }
+        return trees;
+    }
+
+    public List<MenuVo> buildMenus(List<SysMenuDTO> menuDTOS) {
+        List<MenuVo> list = new LinkedList<>();
+        menuDTOS.forEach(menuDTO -> {
+                    if (menuDTO!=null){
+                        List<SysMenuDTO> menuDTOList = menuDTO.getChildren();
+                        MenuVo menuVo = new MenuVo();
+                        menuVo.setName(menuDTO.getName());
+                        menuVo.setPath(menuDTO.getPath());
+
+                        // 如果不是外链
+                        if(!"1".equals(menuDTO.getIsIframe())){
+                            if(menuDTO.getParentId().equals(0L)){
+                                //一级目录需要加斜杠，不然访问 会跳转404页面
+                                menuVo.setPath("/" + menuDTO.getPath());
+                                menuVo.setComponent(StrUtil.isEmpty(menuDTO.getComponent())?"Layout":menuDTO.getComponent());
+                            }else if(!StrUtil.isEmpty(menuDTO.getComponent())){
+                                menuVo.setComponent(menuDTO.getComponent());
+                            }
+                        }
+                        menuVo.setMeta(new MenuMetaVo(menuDTO.getName(),menuDTO.getIcon()));
+                        if(menuDTOList!=null && menuDTOList.size()!=0){
+                            menuVo.setAlwaysShow(true);
+                            menuVo.setRedirect("noredirect");
+                            menuVo.setChildren(buildMenus(menuDTOList));
+                            // 处理是一级菜单并且没有子菜单的情况
+                        } else {
+                            if ("0".equals(menuDTO.getParentId().toString())) {
+                                MenuVo menuVo1 = new MenuVo();
+                                menuVo1.setMeta(menuVo.getMeta());
+                                // 非外链
+                                if (!"1".equals(menuDTO.getIsIframe())) {
+                                    menuVo1.setPath("index");
+                                    menuVo1.setName(menuVo.getName());
+                                    menuVo1.setComponent(menuVo.getComponent());
+                                } else {
+                                    menuVo1.setPath(menuDTO.getPath());
+                                }
+                                menuVo.setName(null);
+                                menuVo.setMeta(null);
+                                menuVo.setComponent("Layout");
+                                List<MenuVo> list1 = new ArrayList<MenuVo>();
+                                list1.add(menuVo1);
+                                menuVo.setChildren(list1);
+                            }
+                        }
+                        list.add(menuVo);
+                    }
+                }
+        );
+        return list;
     }
 
 }

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import cn.littleterry.modules.sys.mapper.SysUserMapper;
 import cn.littleterry.modules.sys.service.SysUserService;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -74,9 +75,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         queryWrapper.eq("user_id",userId);
 
         List<SysUserRole> oldroles = userRoleMapper.selectList(queryWrapper);
-        userRoleMapper.deleteBatchIds(oldroles);
+        if (!CollectionUtils.isEmpty(oldroles)){
+            userRoleMapper.deleteBatchIds(oldroles);
+        }
+
         List<SysUserDept> oldDepts = userDeptMapper.selectList(queryWrapper);
-        userDeptMapper.deleteBatchIds(oldDepts);
+        if (!CollectionUtils.isEmpty(oldDepts)){
+            userDeptMapper.deleteBatchIds(oldDepts);
+        }
+
 
         SysRole[] roles = userDto.getRoles();
         if (roles.length>0){

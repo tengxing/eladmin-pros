@@ -11,6 +11,7 @@
         <result property="path" column="path"/>
         <result property="component" column="component"/>
         <result property="componentName" column="component_name"/>
+        <result property="isIframe" column="is_iframe"/>
         <result property="sort" column="sort"/>
         <result property="icon" column="icon"/>
         <result property="description" column="description"/>
@@ -25,7 +26,7 @@
     </resultMap>
 
     <select id="findByUser" parameterType="java.lang.String"  resultMap="sysMenuMap">
-	    SELECT
+	    SELECT DISTINCT
             m.*
         FROM
             sys_menu m

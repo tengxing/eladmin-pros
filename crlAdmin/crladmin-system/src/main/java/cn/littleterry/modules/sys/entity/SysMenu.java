@@ -46,6 +46,10 @@ public class SysMenu implements Serializable {
 	 */
 	private String componentName;
 	/**
+	 * 是否外链
+	 */
+	private String isIframe;
+	/**
 	 * 菜单排序
 	 */
 	private Double sort;

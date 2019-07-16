@@ -37,9 +37,9 @@ public class SysUserController {
     public R list(SysUser sysUser,
                   @RequestParam(name="page", defaultValue="1") Integer pageNo,
                   @RequestParam(name="size", defaultValue="10") Integer pageSize,
-                  @RequestParam(name="deptId", required = false) Integer deptId){
+                  @RequestParam(name="deptId", required = false) String deptId){
         Map<String,Object> params= new HashMap<>();
-        params.put("deptId",deptId);
+        params.put("deptId",Long.valueOf(deptId));
         PageHelper.startPage(pageNo, pageSize);
         List<SysUserDto> list = sysUserService.queryByMap(params);
         PageInfo<SysUserDto> pageInfo = new PageInfo<>(list);
@@ -68,7 +68,6 @@ public class SysUserController {
         // 默认密码 123456，此密码是加密后的字符
         userDto.setPassword("e10adc3949ba59abbe56e057f20f883e");
         userDto.setAvatar("https://aurora-1255840532.cos.ap-chengdu.myqcloud.com/8918a306ea314404835a9196585c4b75.jpeg");
-        System.out.println(JSON.toJSONString(userDto));
 
         sysUserService.add(userDto);
 
