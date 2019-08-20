@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 /**
  * @author terry
- * @date 2018-11-23
+ * @since 2018-11-23
  */
 public class EntityNotFoundException extends RuntimeException {
 

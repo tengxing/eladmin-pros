@@ -5,16 +5,16 @@ import cn.littleterry.exception.EntityExistException;
 import cn.littleterry.exception.EntityNotFoundException;
 import cn.littleterry.util.ThrowableUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import static org.springframework.http.HttpStatus.*;
 
 /**
  * @author terry
- * @date 2018-11-23
+ * @since 2018-11-23
  */
 @Slf4j
 @RestControllerAdvice
@@ -26,11 +26,11 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handleException(Exception e){
+    public ApiError handleException(Exception e){
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));
         ApiError apiError = new ApiError(BAD_REQUEST.value(),e.getMessage());
-        return buildResponseEntity(apiError);
+        return apiError;
     }
 
     /**
@@ -39,11 +39,11 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity handleAccessDeniedException(AccessDeniedException e){
+    public ApiError handleAccessDeniedException(AccessDeniedException e){
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));
         ApiError apiError = new ApiError(FORBIDDEN.value(),e.getMessage());
-        return buildResponseEntity(apiError);
+        return apiError;
     }
 
     /**
@@ -52,11 +52,11 @@ public class GlobalExceptionHandler {
      * @return
      */
 	@ExceptionHandler(value = BadRequestException.class)
-	public ResponseEntity<ApiError> badRequestException(BadRequestException e) {
+	public ApiError badRequestException(BadRequestException e) {
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));
         ApiError apiError = new ApiError(e.getStatus(),e.getMessage());
-        return buildResponseEntity(apiError);
+        return apiError;
 	}
 
     /**
@@ -65,11 +65,11 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = EntityExistException.class)
-    public ResponseEntity<ApiError> entityExistException(EntityExistException e) {
+    public ApiError entityExistException(EntityExistException e) {
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));
         ApiError apiError = new ApiError(BAD_REQUEST.value(),e.getMessage());
-        return buildResponseEntity(apiError);
+        return apiError;
     }
 
     /**
@@ -78,11 +78,11 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = EntityNotFoundException.class)
-    public ResponseEntity<ApiError> entityNotFoundException(EntityNotFoundException e) {
+    public ApiError entityNotFoundException(EntityNotFoundException e) {
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));
         ApiError apiError = new ApiError(NOT_FOUND.value(),e.getMessage());
-        return buildResponseEntity(apiError);
+        return apiError;
     }
 
     /**
@@ -91,22 +91,13 @@ public class GlobalExceptionHandler {
      * @returns
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
+    public ApiError handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         // 打印堆栈信息
         log.error(ThrowableUtil.getStackTrace(e));
         String[] str = e.getBindingResult().getAllErrors().get(0).getCodes()[1].split("\\.");
         StringBuffer msg = new StringBuffer(str[1]+":");
         msg.append(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         ApiError apiError = new ApiError(BAD_REQUEST.value(),msg.toString());
-        return buildResponseEntity(apiError);
-    }
-
-    /**
-     * 统一返回
-     * @param apiError
-     * @return
-     */
-    private ResponseEntity<ApiError> buildResponseEntity(ApiError apiError) {
-        return new ResponseEntity(apiError, valueOf(apiError.getStatus()));
+        return apiError;
     }
 }

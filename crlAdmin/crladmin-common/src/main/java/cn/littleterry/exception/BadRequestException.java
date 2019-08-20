@@ -7,7 +7,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
  * @author terry
- * @date 2018-11-23
+ * @since 2018-11-23
  * 统一异常处理
  */
 @Getter
