@@ -21,7 +21,7 @@
           <li>修复七牛云存储中文名下载失败的bug</li>
           <li>修复上级目录选择自己导致列表不显示的bug</li>
           <li>大量细节优化</li>
-          <li>【文档】已更新至1.7版本，访问地址：<a target="_blank" href="https://docs.auauz.net" style="color: #317EF3">https://docs.auauz.net</a></li>
+          <li>【文档】已更新至1.7版本，访问地址：<a target="_blank" href="https://docs..net" style="color: #317EF3">https://docs..net</a></li>
         </ol>
         <div style="font-weight: bold">二、前端</div>
         <ol>

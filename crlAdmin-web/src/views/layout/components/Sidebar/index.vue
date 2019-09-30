@@ -10,12 +10,12 @@
       active-text-color="#409EFF"
     >
       <!-- 修改logo -->
-      <el-menu-item :class="{'submenu-title-noDropdown':isCollapse}" style="pointer-events: none;">
+      <el-menu-item :class="{'submenu-title-noDropdown':isCollapse}" index="0" style="pointer-events: none;">
         <!-- 缩小时显示的logo，可以自定义，这里直接使用图标库中的 -->
         <svg-icon v-if="isCollapse" icon-class="run" />
         <!--正常状态下显示的，可以使用本地的logoImg-->
         <div class="logo-con">
-
+          <img src="https://github.com/tengxing/WebFrameCollection/blob/master/avatar.jpg?raw=true">
         </div>
       </el-menu-item>
       <sidebar-item v-for="route in permission_routers" :key="route.path" :item="route" :base-path="route.path"/>
