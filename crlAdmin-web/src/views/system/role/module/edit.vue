@@ -5,8 +5,9 @@
   </div>
 </template>
 <script>
-import eForm from './form'
-export default {
+  import eForm from './form'
+
+  export default {
   components: { eForm },
   props: {
     data: {
@@ -21,14 +22,7 @@ export default {
   methods: {
     to() {
       const _this = this.$refs.form
-      _this.deptIds = []
-      _this.form = { id: this.data.id, name: this.data.name, remark: this.data.remark, depts: this.data.depts, dataScope: this.data.dataScope }
-      if (_this.form.dataScope === '自定义') {
-        _this.getDepts()
-      }
-      for (let i = 0; i < _this.form.depts.length; i++) {
-        _this.deptIds[i] = _this.form.depts[i].id
-      }
+      _this.form = { id: this.data.id, roleName: this.data.roleName, roleCode: this.data.roleCode, remark: this.data.remark }
       _this.dialog = true
     }
   }

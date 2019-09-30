@@ -28,7 +28,7 @@ export default {
       _this.getDepts()
       _this.form = {
         id: this.data.id,
-        name: this.data.name,
+        jobName: this.data.jobName,
         sort: this.data.sort,
         enabled: this.data.enabled,
         createTime: this.data.createTime,

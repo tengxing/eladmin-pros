@@ -7,8 +7,8 @@
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model.number="form.sort" :min="0" :max="999" controls-position="right" style="width: 370px;"/>
       </el-form-item>
-      <el-form-item v-if="form.pid !== 0" label="状态" prop="enabled">
-        <el-radio v-for="item in dicts" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
+      <el-form-item label="状态" prop="status">
+        <el-input v-model="form.status" style="width: 370px;"/>
       </el-form-item>
       <el-form-item label="所属部门">
         <treeselect v-model="deptId" :options="depts" :normalizer="normalizer" style="width: 370px" placeholder="选择部门" />

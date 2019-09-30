@@ -4,8 +4,8 @@
     <!--表格渲染-->
     <div :style="'height: auto;max-height:' + height + 'overflow-y: auto;'">
       <el-table v-loading="loading" :data="data" highlight-current-row size="small" style="width: 100%;" @current-change="handleCurrentChange">
-        <el-table-column prop="roleName" label="名称"/>
-        <el-table-column prop="roleCode" label="数据权限"/>
+        <el-table-column prop="roleName" label="角色名称"/>
+        <el-table-column prop="roleCode" label="角色编码"/>
         <el-table-column prop="description" label="描述"/>
         <el-table-column prop="createTime" label="创建日期">
           <template slot-scope="scope">
@@ -174,6 +174,7 @@ export default {
       })
     },
     handleCurrentChange(val) {
+      console.log(val)
       if (val) {
         const _this = this
         // 清空权限与菜单的选中
@@ -228,16 +229,12 @@ export default {
     saveMenu() {
       this.menuLoading = true
       const role = { id: this.currentId, menus: [] }
-      // 得到半选的父节点数据，保存起来
-      this.$refs.menu.getHalfCheckedNodes().forEach(function(data, index) {
-        const permission = { id: data.id }
-        role.menus.push(permission)
-      })
       // 得到已选中的 key 值
       this.$refs.menu.getCheckedKeys().forEach(function(data, index) {
-        const permission = { id: data }
-        role.menus.push(permission)
+        const menu = { id: data }
+        role.menus.push(menu)
       })
+
       editMenu(role).then(res => {
         this.$notify({
           title: '保存成功',
@@ -245,6 +242,12 @@ export default {
           duration: 2500
         })
         this.menuLoading = false
+        // var _this = this
+        // _this.data.forEach(function(data, index) {
+        //   if (data.id === _this.currentId) {
+        //     data.menus = _this.$refs.menu.getCheckedNodes()
+        //   }
+        // })
         this.update()
       }).catch(err => {
         this.menuLoading = false
@@ -256,7 +259,7 @@ export default {
       get(this.currentId).then(res => {
         for (let i = 0; i < this.data.length; i++) {
           if (res.id === this.data[i].id) {
-            this.data[i] = res
+            this.data[i] = res.result
             break
           }
         }

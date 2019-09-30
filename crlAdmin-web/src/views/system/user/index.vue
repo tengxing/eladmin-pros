@@ -15,13 +15,7 @@
           <el-table-column prop="phone" label="电话"/>
           <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱"/>
           <el-table-column prop="deptName" label="部门 / 岗位"/>
-          <el-table-column label="状态" align="center">
-            <template slot-scope="scope">
-              <div v-for="item in dicts" :key="item.id">
-                <el-tag v-if="scope.row.enabled === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
-              </div>
-            </template>
-          </el-table-column>
+          <el-table-column prop="enabled" label="状态" align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建日期">
             <template slot-scope="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>

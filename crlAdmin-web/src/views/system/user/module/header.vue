@@ -75,7 +75,7 @@ export default {
     },
     // 去查询
     toQuery() {
-      this.sup_this.page = 0
+      this.sup_this.page = 1
       this.sup_this.init()
     },
     // 导出

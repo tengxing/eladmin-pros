@@ -10,7 +10,7 @@ export default {
     async getDict(name) {
       return new Promise((resolve, reject) => {
         get(name).then(res => {
-          this.dicts = res.content
+          this.dicts = res.result
           resolve(res)
         }).catch(err => {
           reject(err)

@@ -1,22 +1,16 @@
 package cn.littleterry.modules.system.repository;
 
-import cn.littleterry.modules.system.domain.User;
-import cn.littleterry.modules.system.domain.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author terry
- * @date 2018-11-22
+ * @since 2018-11-22
  */
-public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * findByUsername

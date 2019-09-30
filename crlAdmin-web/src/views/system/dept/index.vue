@@ -1,15 +1,9 @@
 <template>
   <div class="app-container">
-    <eHeader :query="query" :dicts="dicts"/>
+    <eHeader :query="query"/>
     <!--表格渲染-->
     <tree-table v-loading="loading" :expand-all="true" :data="data" :columns="columns" size="small">
-      <el-table-column label="状态" align="center">
-        <template slot-scope="scope">
-          <div v-for="item in dicts" :key="item.id">
-            <el-tag v-if="scope.row.enabled === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
-          </div>
-        </template>
-      </el-table-column>
+      <el-table-column prop="enabled" label="状态" />
       <el-table-column prop="createTime" label="创建日期">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -37,17 +31,17 @@
 </template>
 
 <script>
-import treeTable from '@/components/TreeTable'
-import checkPermission from '@/utils/permission'
-import initData from '@/mixins/initData'
-import initDict from '@/mixins/initDict'
-import { del } from '@/api/dept'
-import { parseTime } from '@/utils/index'
-import eHeader from './module/header'
-import edit from './module/edit'
-export default {
+  import treeTable from '@/components/TreeTable'
+  import checkPermission from '@/utils/permission'
+  import initData from '@/mixins/initData'
+  import {del} from '@/api/dept'
+  import {parseTime} from '@/utils/index'
+  import eHeader from './module/header'
+  import edit from './module/edit'
+
+  export default {
   components: { eHeader, edit, treeTable },
-  mixins: [initData, initDict],
+  mixins: [initData],
   data() {
     return {
       columns: [
@@ -62,8 +56,6 @@ export default {
   created() {
     this.$nextTick(() => {
       this.init()
-      // 加载数据字典
-      this.getDict('dept_status')
     })
   },
   methods: {

@@ -1,4 +1,4 @@
-package cn.littleterry.modules.system.domain;
+package cn.littleterry.modules.system.repository;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  * @author terry
- * @date 2018-11-22
+ * @since 2018-11-22
  */
 @Entity
 @Getter

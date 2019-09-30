@@ -14,13 +14,7 @@
           {{ scope.row.sort }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center">
-        <template slot-scope="scope">
-          <div v-for="item in dicts" :key="item.id">
-            <el-tag v-if="scope.row.enabled === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
-          </div>
-        </template>
-      </el-table-column>
+      <el-table-column prop="status" label="状态" align="center"/>
       <el-table-column prop="createTime" label="创建日期">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -73,8 +67,6 @@ export default {
   created() {
     this.$nextTick(() => {
       this.init()
-      // 加载数据字典
-      this.getDict('job_status')
     })
   },
   methods: {

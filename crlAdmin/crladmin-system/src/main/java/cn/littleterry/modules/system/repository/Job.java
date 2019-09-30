@@ -1,4 +1,4 @@
-package cn.littleterry.modules.system.domain;
+package cn.littleterry.modules.system.repository;
 
 import lombok.Data;
 import org.hibernate.annotations.*;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
 * @author terry
-* @date 2019-03-29
+* @since 2019-03-29
 */
 @Entity
 @Data

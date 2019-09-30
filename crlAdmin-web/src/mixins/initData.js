@@ -3,7 +3,7 @@ import { initData } from '@/api/data'
 export default {
   data() {
     return {
-      loading: true, data: [], page: 0, size: 10, total: 0, url: '', params: {}, query: {}, time: 170
+      loading: true, data: [], page: 1, size: 10, total: 0, url: '', params: {}, query: {}, time: 170
     }
   },
   methods: {
@@ -14,8 +14,8 @@ export default {
       return new Promise((resolve, reject) => {
         this.loading = true
         initData(this.url, this.params).then(res => {
-          this.total = res.totalElements
-          this.data = res.content
+          this.total = res.result.length
+          this.data = res.result
           setTimeout(() => {
             this.loading = false
           }, this.time)

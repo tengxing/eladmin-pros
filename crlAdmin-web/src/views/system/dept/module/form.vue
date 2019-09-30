@@ -5,7 +5,8 @@
         <el-input v-model="form.deptName" style="width: 370px;"/>
       </el-form-item>
       <el-form-item v-if="form.parentId !== 0" label="状态" prop="enabled">
-        <el-radio v-for="item in dicts" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
+        <el-radio v-model="enabled" label="true">正常</el-radio>
+        <el-radio v-model="enabled" label="false">锁定</el-radio>
       </el-form-item>
       <el-form-item v-if="form.parentId !== 0" style="margin-bottom: 0px;" label="上级部门">
         <treeselect v-model="form.parentId" :options="depts" :normalizer="normalizer" style="width: 370px;" placeholder="选择上级类目" />

@@ -26,16 +26,29 @@
     </resultMap>
 
     <select id="findByUser" parameterType="java.lang.String"  resultMap="sysMenuMap">
-	    SELECT DISTINCT
-            m.*
+        SELECT DISTINCT a.* from (SELECT
+        m.*
         FROM
-            sys_menu m
+        sys_menu m
         JOIN sys_role_menu a ON a.menu_id = m.id
         JOIN sys_role b ON a.role_id = b.id
         JOIN sys_user_role c ON c.role_id = b.id
         JOIN sys_user d ON d.id = c.user_id
         WHERE
-            d.username = #{username,jdbcType=VARCHAR}
+        d.username = #{username,jdbcType=VARCHAR}
+        UNION
+        SELECT * from sys_menu m where id in (SELECT DISTINCT
+        m.parent_id
+        FROM
+        sys_menu m
+        JOIN sys_role_menu a ON a.menu_id = m.id
+        JOIN sys_role b ON a.role_id = b.id
+        JOIN sys_user_role c ON c.role_id = b.id
+        JOIN sys_user d ON d.id = c.user_id
+        WHERE
+        d.username = #{username,jdbcType=VARCHAR}
+        )) a
+        ORDER BY a.sort
 	</select>
 
     <select id="findByRoleId" parameterType="java.lang.Long" resultMap="sysMenuMap">

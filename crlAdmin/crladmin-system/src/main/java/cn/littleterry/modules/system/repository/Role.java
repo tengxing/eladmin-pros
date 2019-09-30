@@ -1,4 +1,4 @@
-package cn.littleterry.modules.system.domain;
+package cn.littleterry.modules.system.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * 角色
  * @author terry
- * @date 2018-11-22
+ * @since 2018-11-22
  */
 @Entity
 @Table(name = "role")

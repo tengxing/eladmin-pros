@@ -1,4 +1,4 @@
-package cn.littleterry.modules.system.domain;
+package cn.littleterry.modules.system.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
 * @author terry
-* @date 2019-03-25
+* @since 2019-03-25
 */
 @Entity
 @Data

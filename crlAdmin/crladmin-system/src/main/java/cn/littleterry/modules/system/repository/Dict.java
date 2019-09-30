@@ -1,17 +1,15 @@
-package cn.littleterry.modules.system.domain;
+package cn.littleterry.modules.system.repository;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 /**
 * @author terry
-* @date 2019-04-10
+* @since 2019-04-10
 */
 @Entity
 @Data

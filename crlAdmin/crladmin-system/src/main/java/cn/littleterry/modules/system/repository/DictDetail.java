@@ -1,4 +1,4 @@
-package cn.littleterry.modules.system.domain;
+package cn.littleterry.modules.system.repository;
 
 import lombok.Data;
 import javax.persistence.*;
@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
 * @author terry
-* @date 2019-04-10
+* @since 2019-04-10
 */
 @Entity
 @Data
