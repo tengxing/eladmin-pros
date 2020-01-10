@@ -5,6 +5,7 @@ import cn.littleterry.entity.SysLog;
 import cn.littleterry.mapper.SysLogMapper;
 import cn.littleterry.repository.LogRepository;
 import cn.littleterry.service.LogService;
+import cn.littleterry.util.GlobalAuthUtils;
 import cn.littleterry.util.RequestHolder;
 import cn.littleterry.util.SecurityContextHolder;
 import cn.littleterry.util.StringUtils;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  * @author terry
@@ -43,11 +46,11 @@ public class LogServiceImpl implements LogService {
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        cn.littleterry.aop.log.Log aopLog = method.getAnnotation(cn.littleterry.aop.log.Log.class);
+        io.swagger.annotations.ApiOperation aopLog = method.getAnnotation(io.swagger.annotations.ApiOperation.class);
 
         // 描述
         if (log != null) {
-            log.setLogContent(aopLog.value());
+            log.setLogContent(log.getLogContent()==null?aopLog.value():aopLog.value()+":\n"+log.getLogContent());
             log.setLogType(2);
             if("用户登录".equals(aopLog.value())){
                 log.setLogType(1);
@@ -77,8 +80,7 @@ public class LogServiceImpl implements LogService {
         log.setRequestUri(request.getRequestURI());
 
         if(!LOGINPATH.equals(signature.getName())){
-            UserDetails userDetails = SecurityContextHolder.getUserDetails();
-            username = userDetails.getUsername();
+            username = GlobalAuthUtils.getCurrentUser();
         } else {
             try {
                 JSONObject jsonObject = new JSONObject(argValues[0]);
@@ -90,6 +92,8 @@ public class LogServiceImpl implements LogService {
         log.setOperateMethod(methodName);
         log.setOperateId(username);
         log.setRequestParam(params + " }");
+        log.setCreateBy(log.getOperateId());
+        log.setCreateTime(Calendar.getInstance().getTime());
         sysLogMapper.insert(log);
     }
 }

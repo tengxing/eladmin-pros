@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * @author terry
- * @date 2018-11-30
+ * @since 2018-11-30
  */
 @Getter
 @Setter
-public class AuthorizationUser {
+public class AuthUser {
 
     @NotBlank
     private String username;

@@ -1,7 +1,7 @@
 package cn.littleterry.modules.security.rest;
 
 import cn.littleterry.aop.log.Log;
-import cn.littleterry.modules.security.security.AuthorizationUser;
+import cn.littleterry.modules.security.security.AuthUser;
 import cn.littleterry.modules.security.security.JwtUser;
 import cn.littleterry.util.EncryptUtils;
 import cn.littleterry.util.SecurityContextHolder;
@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author terry
- * @date 2018-11-23
+ * @since 2018-11-23
  * 授权、根据token获取用户详细信息
  */
 @Slf4j
 @RestController
 @RequestMapping("auth")
-public class AuthenticationController {
+public class AuthController {
 
     @Value("${jwt.header}")
     private String tokenHeader;
@@ -45,7 +45,7 @@ public class AuthenticationController {
      */
     @Log("用户登录")
     @PostMapping(value = "${jwt.auth.path}")
-    public ResponseEntity login(@Validated @RequestBody AuthorizationUser authorizationUser){
+    public ResponseEntity login(@Validated @RequestBody AuthUser authorizationUser){
 
         final JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(authorizationUser.getUsername());
 

@@ -25,12 +25,25 @@ public class R<T> {
     public static <E> R<E> ok() {
         return new R<>();
     }
+    public static <E> R<E> ok(String message) {
+        R r = new R<>();
+        r.setMessage(message);
+        return r;
+    }
+
     public R() {
     }
     public static <E> R<E> error() {
         R r = new R<>();
         r.setCode(500);
         r.setMessage("操作失败！");
+        r.setSuccess(false);
+        return r;
+    }
+    public static <E> R<E> error(String message) {
+        R r = new R<>();
+        r.setCode(500);
+        r.setMessage(message);
         r.setSuccess(false);
         return r;
     }
@@ -43,5 +56,4 @@ public class R<T> {
     public static void main(String[] args){
         System.out.println(JSON.toJSONString(R.ok().write(new R())));
     }
-
 }

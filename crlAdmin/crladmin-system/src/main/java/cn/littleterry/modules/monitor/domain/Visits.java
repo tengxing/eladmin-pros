@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * pv 与 ip 统计
  *
  * @author terry
- * @date 2018-12-13
+ * @since 2018-12-13
  */
 @Entity
 @Data

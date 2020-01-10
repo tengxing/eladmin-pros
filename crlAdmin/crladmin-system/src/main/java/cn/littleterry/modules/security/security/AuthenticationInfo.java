@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author terry
- * @date 2018-11-23
+ * @since 2018-11-23
  * 返回token
  */
 @Getter

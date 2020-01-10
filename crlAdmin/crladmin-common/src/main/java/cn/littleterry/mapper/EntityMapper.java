@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author terry
- * @date 2018-11-23
+ * @since 2018-11-23
  */
 public interface EntityMapper<D, E> {
 

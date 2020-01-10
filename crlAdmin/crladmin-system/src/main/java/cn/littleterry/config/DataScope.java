@@ -1,14 +1,10 @@
 package cn.littleterry.config;
 
-import cn.littleterry.modules.system.domain.Dept;
-import cn.littleterry.modules.system.domain.Role;
-import cn.littleterry.modules.system.domain.User;
-import cn.littleterry.modules.system.service.DeptService;
-import cn.littleterry.modules.system.service.RoleService;
-import cn.littleterry.modules.system.service.UserService;
+import cn.littleterry.modules.system.repository.*;
 import cn.littleterry.util.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,23 +21,23 @@ public class DataScope {
     private final String[] scopeType = {"全部","本级","自定义"};
 
     @Autowired
-    private UserService userService;
+    private UserRepository userService;
 
     @Autowired
-    private RoleService roleService;
+    private RoleRepository roleService;
 
     @Autowired
-    private DeptService deptService;
+    private DeptRepository deptService;
 
     public Set<Long> getDeptIds() {
 
-        User user = userService.findByName(SecurityContextHolder.getUserDetails().getUsername());
+        User user = userService.findByUsername(SecurityContextHolder.getUserDetails().getUsername());
 
         // 用于存储部门id
         Set<Long> deptIds = new HashSet<>();
 
         // 查询用户角色
-        List<Role> roleSet = roleService.findByUsers_Id(user.getId());
+        Set<Role> roleSet = roleService.findByUsers_Id(user.getId());
 
         for (Role role : roleSet) {
 

@@ -12,7 +12,7 @@
     <artifactId>crladmin-system</artifactId>
 
     <properties>
-        <jjwt.version>0.9.1</jjwt.version>
+        <jwt.version>0.9.1</jwt.version>
     </properties>
 
     <dependencies>
@@ -33,7 +33,13 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
+            <version>${jwt.version}</version>
+        </dependency>
+
+        <dependency>
+        <groupId>com.gitee.sunchenbin.mybatis.actable</groupId>
+        <artifactId>mybatis-enhance-actable</artifactId>
+        <version>1.0.4</version>
         </dependency>
 
         <!--websocket-->

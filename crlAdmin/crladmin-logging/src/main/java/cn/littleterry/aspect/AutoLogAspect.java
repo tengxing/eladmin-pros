@@ -48,7 +48,7 @@ public class AutoLogAspect {
         try {
             result = joinPoint.proceed();
         } catch (Throwable e) {
-            throw new BadRequestException(e.getMessage());
+            throw new BadRequestException(e.fillInStackTrace().toString());
         }
         SysLog log = new SysLog("INFO",System.currentTimeMillis() - currentTime);
         logService.save(joinPoint, log);

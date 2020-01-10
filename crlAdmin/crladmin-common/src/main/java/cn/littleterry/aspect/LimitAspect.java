@@ -32,7 +32,7 @@ public class LimitAspect {
     public void pointcut() {
     }
 
-    @Around("pointcut()")
+    @Around("pointcut()") //环绕通知
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

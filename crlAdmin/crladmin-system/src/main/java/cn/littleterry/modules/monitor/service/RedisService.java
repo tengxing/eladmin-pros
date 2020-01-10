@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * 可自行扩展
  * @author terry
- * @date 2018-12-10
+ * @since 2018-12-10
  */
 public interface RedisService {
 

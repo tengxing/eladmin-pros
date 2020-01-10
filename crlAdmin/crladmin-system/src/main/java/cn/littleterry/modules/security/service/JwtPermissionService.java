@@ -1,13 +1,8 @@
 package cn.littleterry.modules.security.service;
 
-import cn.littleterry.modules.system.domain.Permission;
-import cn.littleterry.modules.system.domain.Role;
-import cn.littleterry.modules.system.domain.User;
-import cn.littleterry.modules.system.repository.PermissionRepository;
-import cn.littleterry.modules.system.repository.RoleRepository;
-import cn.littleterry.modules.system.domain.Permission;
-import cn.littleterry.modules.system.domain.Role;
-import cn.littleterry.modules.system.domain.User;
+import cn.littleterry.modules.system.repository.Permission;
+import cn.littleterry.modules.system.repository.Role;
+import cn.littleterry.modules.system.repository.User;
 import cn.littleterry.modules.system.repository.PermissionRepository;
 import cn.littleterry.modules.system.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

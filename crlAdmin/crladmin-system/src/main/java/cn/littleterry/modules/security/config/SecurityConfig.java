@@ -1,8 +1,7 @@
 package cn.littleterry.modules.security.config;
 
-import cn.littleterry.modules.security.service.JwtUserDetailsService;
-import cn.littleterry.modules.security.security.JwtAuthenticationEntryPoint;
-import cn.littleterry.modules.security.security.JwtAuthorizationTokenFilter;
+import cn.littleterry.modules.security.security.JwtAuthEntryPoint;
+import cn.littleterry.modules.security.security.JwtAuthTokenFilter;
 import cn.littleterry.modules.security.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,22 +20,31 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+/**
+ * @description: Spring-Security配置
+ * @author terry
+ * @since 2019/04/15
+ */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true
+)//判断用户对某个控制层的方法是否具有访问权限
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private JwtAuthEntryPoint unauthorizedHandler;
 
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
+
 
     /**
      * 自定义基于JWT的安全过滤器
      */
     @Autowired
-    JwtAuthorizationTokenFilter authenticationTokenFilter;
+    JwtAuthTokenFilter authTokenFilter;
 
     @Value("${jwt.header}")
     private String tokenHeader;
@@ -44,24 +52,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${jwt.auth.path}")
     private String loginPath;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
+                // 设置UserDetailsService
                 .userDetailsService(jwtUserDetailsService)
+                // 使用BCrypt进行密码的hash
                 .passwordEncoder(passwordEncoderBean());
     }
 
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        // Remove the ROLE_ prefix
         return new GrantedAuthorityDefaults("");
     }
 
+    /**
+     * 密码加密解密
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoderBean() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 认证管理器
+     * @return
+     * @throws Exception
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -70,19 +88,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
         httpSecurity
-
                 // 禁用 CSRF
                 .csrf().disable()
-
-                // 授权异常
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-
-                // 不创建会话
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
-                // 过滤请求
+                // 授权异常处理
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                // 基于token，不需要session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                // 允许对于网站静态资源的无授权访问
                 .authorizeRequests()
                 .antMatchers(
                         HttpMethod.GET,
@@ -94,31 +109,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers( HttpMethod.POST,"/auth/"+loginPath).permitAll()
                 .antMatchers("/websocket/**").permitAll()
-                // 支付宝回调
-                .antMatchers("/api/aliPay/return").anonymous()
-                .antMatchers("/api/aliPay/notify").anonymous()
 
                 // 系统监控
                 .antMatchers("/actuator/**").anonymous()
+
+                // 系统监控
+                .antMatchers("/sys/**").permitAll()
 
                 // swagger start
                 .antMatchers("/swagger-ui.html").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 .antMatchers("/webjars/**").anonymous()
                 .antMatchers("/*/api-docs").anonymous()
-                // swagger end
 
-                // 接口限流测试
+                .antMatchers("/sql/*").anonymous()
+
                 .antMatchers("/test/**").anonymous()
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
-
+                .antMatchers("/sql/*").permitAll()
                 .antMatchers("/druid/**").permitAll()
-                // 所有请求都需要认证
+                // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 // 防止iframe 造成跨域
                 .and().headers().frameOptions().disable();
-
+        // 禁用缓存
+        httpSecurity.
+                headers().cacheControl();
         httpSecurity
-                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

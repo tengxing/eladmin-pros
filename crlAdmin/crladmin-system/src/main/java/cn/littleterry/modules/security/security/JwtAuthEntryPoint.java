@@ -1,5 +1,7 @@
 package cn.littleterry.modules.security.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -9,9 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * 未认证处理
+ * @author terry
+ * @since 2018-11-30
+ */
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
-
+public class JwtAuthEntryPoint implements AuthenticationEntryPoint, Serializable {
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthEntryPoint.class);
     private static final long serialVersionUID = -8970718410437077606L;
 
     @Override
@@ -19,8 +26,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         /**
-         * 当用户尝试访问安全的REST资源而不提供任何凭据时，将调用此方法发送401 响应
+         * 用户没有提供凭据访问REST资源访 发送401响应
          */
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException==null?"Unauthorized":authException.getMessage());
+        logger.error("Unauthorized error. Message - {}", authException.getMessage());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
     }
 }

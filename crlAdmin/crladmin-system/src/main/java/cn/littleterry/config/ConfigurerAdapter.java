@@ -42,7 +42,8 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
      * 如不想全局 直接添加注解 @JsonSerialize(using= ToStringSerializer.class) 到相应的字段上
      * @param converters
      */
-    /*@Override
+    /*
+    @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter =
@@ -80,12 +81,11 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
 
         config.setSerializeConfig(serializeConfig);
         config.setSerializerFeatures(
-                SerializerFeature.WriteMapNullValue,
-                //SerializerFeature.WriteNullListAsEmpty,
-                //SerializerFeature.WriteNullStringAsEmpty,
+                //SerializerFeature.WriteMapNullValue,
+                /*SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty,
                 SerializerFeature.WriteNullNumberAsZero,
-                SerializerFeature.WriteDateUseDateFormat,
-                /*禁用循环引用*/
+                SerializerFeature.WriteDateUseDateFormat,*/
                 SerializerFeature.DisableCircularReferenceDetect
         );
 

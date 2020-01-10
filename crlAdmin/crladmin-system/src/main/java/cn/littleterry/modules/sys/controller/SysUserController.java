@@ -39,7 +39,7 @@ public class SysUserController {
                   @RequestParam(name="size", defaultValue="10") Integer pageSize,
                   @RequestParam(name="deptId", required = false) String deptId){
         Map<String,Object> params= new HashMap<>();
-        params.put("deptId",Long.valueOf(deptId));
+        params.put("deptId",deptId);
         PageHelper.startPage(pageNo, pageSize);
         List<SysUserDto> list = sysUserService.queryByMap(params);
         PageInfo<SysUserDto> pageInfo = new PageInfo<>(list);
