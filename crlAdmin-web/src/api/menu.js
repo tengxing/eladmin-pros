@@ -10,7 +10,7 @@ export function getMenusTree() {
 
 export function buildMenus() {
   return request({
-    url: 'api/menus/build',
+    url: 'sys/menu/build',
     method: 'get'
   })
 }

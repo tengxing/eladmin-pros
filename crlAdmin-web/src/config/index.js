@@ -17,7 +17,7 @@ export default {
   /**
    * @description token key
    */
-  TokenKey: 'EL-ADMIN-TOEKN',
+  TokenKey: 'CRL-Admin-TOEKN',
 
   /**
    * @description 请求超时时间，毫秒（默认2分钟）

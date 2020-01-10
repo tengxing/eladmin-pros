@@ -1,3 +1,6 @@
+/**
+ * Created by jiachenpan on 16/11/18.
+ */
 
 export function parseTime(time) {
   if (time) {

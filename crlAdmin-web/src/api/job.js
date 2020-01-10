@@ -31,7 +31,7 @@ export function del(id) {
 export function edit(data) {
   return request({
     url: 'sys/job/modify',
-    method: 'get',
+    method: 'post',
     data
   })
 }

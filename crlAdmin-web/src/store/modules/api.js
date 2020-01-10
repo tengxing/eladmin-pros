@@ -12,7 +12,9 @@ const api = {
     // Sql 监控
     sqlApi: baseUrl + '/druid',
     // swagger
-    swaggerApi: baseUrl + '/swagger-ui.html'
+    swaggerApi: 'http://www.bejson.com/json2javapojo/new/',
+    // 在线工具
+    onlineToolApi: 'http://www.bejson.com/json2javapojo/new/'
   }
 }
 

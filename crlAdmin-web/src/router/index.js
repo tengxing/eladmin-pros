@@ -77,7 +77,6 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  base: '/crlAdmin/',
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap

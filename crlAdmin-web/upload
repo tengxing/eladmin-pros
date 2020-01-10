@@ -1,0 +1,5 @@
+npm run build
+tar -cvf dist.tar dist
+scp dist.tar terry@119.29.111.225:/home/terry
+scp ../crlAdmin/crladmin-system/target/crladmin-system-1.0.jar terry@119.29.111.225:/home/terry
+ssh terry@119.29.111.225
